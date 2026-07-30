@@ -1,130 +1,105 @@
+import Image from "next/image";
+
+const quickLinks = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Why Us", href: "#why-us" },
+  { name: "Courses", href: "#courses" },
+  { name: "FAQ", href: "#faq" },
+  { name: "Contact", href: "#contact" },
+];
+
+const programs = [
+  "Spoken English",
+  "Confidence Building",
+  "Corporate Communication",
+  "Interview Preparation",
+  "Public Speaking",
+  "Personal Mentoring",
+];
+
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-[#062B5C] text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+    <footer className="bg-[#041F43] px-5 pb-8 pt-14 text-white sm:px-8 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-2">
+            <a href="#home" className="inline-flex rounded-xl bg-white p-3">
+              <Image
+                src="/images/logo.png"
+                alt="Unmute Pro"
+                width={150}
+                height={55}
+                className="h-auto w-[130px]"
+              />
+            </a>
 
-        <div className="grid gap-12 lg:grid-cols-4">
+            <h2 className="mt-6 text-2xl font-bold">
+              Your Silence Ends Here.
+            </h2>
 
-          {/* Brand */}
-          <div>
-            <img
-              src="/images/logo.png"
-              alt="Unmute Pro"
-              className="h-16 w-auto"
-            />
-
-            <p className="mt-6 text-blue-100 leading-7">
-              We help students, job seekers and professionals become confident
-              English speakers through practical communication training.
+            <p className="mt-4 max-w-xl leading-7 text-blue-100">
+              Practical spoken-English and communication training for students,
+              job seekers and working professionals who want to express
+              themselves with clarity and confidence.
             </p>
 
-            <p className="mt-6 font-semibold text-[#00D97E]">
-              Your Silence Ends Here
-            </p>
-          </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="https://wa.me/919392209162"
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-xl bg-[#00D97E] px-5 py-3 text-sm font-bold text-[#062B5C] transition hover:-translate-y-1 hover:bg-[#00C970]"
+              >
+                WhatsApp
+              </a>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold">Quick Links</h3>
-
-            <ul className="mt-6 space-y-3 text-blue-100">
-
-              <li><a href="#home" className="hover:text-[#00D97E]">Home</a></li>
-
-              <li><a href="#about" className="hover:text-[#00D97E]">About</a></li>
-
-              <li><a href="#courses" className="hover:text-[#00D97E]">Courses</a></li>
-
-              <li><a href="#testimonials" className="hover:text-[#00D97E]">Testimonials</a></li>
-
-              <li><a href="#contact" className="hover:text-[#00D97E]">Contact</a></li>
-
-            </ul>
-          </div>
-
-          {/* Courses */}
-          <div>
-            <h3 className="text-xl font-bold">Programs</h3>
-
-            <ul className="mt-6 space-y-3 text-blue-100">
-
-              <li>Spoken English</li>
-
-              <li>Interview Preparation</li>
-
-              <li>Corporate Communication</li>
-
-              <li>Personality Development</li>
-
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-
-            <h3 className="text-xl font-bold">
-              Contact
-            </h3>
-
-            <div className="mt-6 space-y-5 text-blue-100">
-
-              <div>
-
-                <p className="font-semibold text-white">
-                  Phone
-                </p>
-
-                <a
-                  href="tel:+919392209162"
-                  className="hover:text-[#00D97E]"
-                >
-                  +91 93922 09162
-                </a>
-
-              </div>
-
-              <div>
-
-                <p className="font-semibold text-white">
-                  WhatsApp
-                </p>
-
-                <a
-                  href="https://wa.me/919392209162"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-[#00D97E]"
-                >
-                  Chat Now
-                </a>
-
-              </div>
-
-              <div>
-
-                <p className="font-semibold text-white">
-                  Training
-                </p>
-
-                <p>
-                  Online & Offline
-                </p>
-
-              </div>
-
+              <a
+                href="tel:+919392209162"
+                className="rounded-xl border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                Call Us
+              </a>
             </div>
-
           </div>
 
+          <div>
+            <h3 className="text-lg font-bold">Quick Links</h3>
+
+            <ul className="mt-5 space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-blue-100 transition hover:text-[#00D97E]"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold">Programs</h3>
+
+            <ul className="mt-5 space-y-3">
+              {programs.map((program) => (
+                <li key={program} className="text-blue-100">
+                  {program}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-14 border-t border-blue-900 pt-8 text-center text-sm text-blue-200">
+        <div className="flex flex-col items-center justify-between gap-3 pt-8 text-center text-sm text-blue-200 sm:flex-row sm:text-left">
+          <p>© {currentYear} Unmute Pro. All rights reserved.</p>
 
-          © {new Date().getFullYear()} Unmute Pro.
-          All Rights Reserved.
-
+          <p>Confidence first. English follows naturally.</p>
         </div>
-
       </div>
     </footer>
   );

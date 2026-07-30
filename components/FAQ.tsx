@@ -1,108 +1,120 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const questions = [
+const faqs = [
   {
-    question: "Who can join Unmute Pro courses?",
+    question: "Can a complete beginner join Unmute Pro?",
     answer:
-      "Our programs are designed for students, job seekers, beginners, working professionals, and anyone who wants to improve their English communication and confidence.",
+      "Yes. Our programs are suitable for beginners as well as learners who already understand English but hesitate to speak.",
   },
   {
-    question: "Do I need strong grammar before joining?",
+    question: "Are the sessions practical or grammar-based?",
     answer:
-      "No. You do not need advanced grammar knowledge. We teach grammar naturally through practical speaking activities and real-life communication.",
+      "Our primary focus is practical communication. Grammar is explained where necessary, but learners spend more time speaking, practising and receiving feedback.",
   },
   {
-    question: "Are classes available online and offline?",
+    question: "Who can join the programs?",
     answer:
-      "Online classes are available for learners from different locations. Offline availability depends on the active batch and location. Contact us for the latest details.",
-  },
-  {
-    question: "Will there be speaking practice in every class?",
-    answer:
-      "Yes. Our approach focuses on regular speaking practice through conversations, role plays, mock interviews, presentations, and guided activities.",
+      "Students, job seekers, working professionals, homemakers and anyone who wants to improve spoken English and communication confidence can join.",
   },
   {
     question: "Do you provide interview preparation?",
     answer:
-      "Yes. Interview preparation includes professional introductions, common HR questions, behavioural questions, mock interviews, body language, and confidence guidance.",
+      "Yes. We provide self-introduction practice, common interview questions, mock interviews, body-language guidance and personal feedback.",
   },
   {
-    question: "Can working professionals join?",
+    question: "Are classes available online?",
     answer:
-      "Yes. We offer programs covering workplace communication, meetings, presentations, professional vocabulary, email writing, and corporate communication.",
+      "Please contact us for the latest information about available learning formats, class schedules and upcoming programs.",
   },
   {
-    question: "Is a free demo session available?",
+    question: "How can I choose the right course?",
     answer:
-      "Yes. You can book a free demo through the contact form or WhatsApp. We will understand your learning goals and suggest a suitable course.",
+      "Book a free demo or speak with our mentor. We will understand your level and goals before recommending the most suitable program.",
   },
   {
-    question: "How long does it take to improve spoken English?",
+    question: "Will I become fluent immediately?",
     answer:
-      "Progress depends on your current level, practice, attendance, and consistency. Most learners begin noticing improvement when they practise regularly and apply feedback.",
+      "Fluency develops through regular practice, consistent attendance and active participation. Our role is to guide you with the right structure, activities and feedback.",
+  },
+  {
+    question: "How can I know the course fees and timings?",
+    answer:
+      "Course fees and current timings are shared personally based on the selected program. Contact us through WhatsApp, phone or the enquiry form.",
   },
 ];
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+
+  const toggleFAQ = (index: number) => {
+    setActiveIndex((currentIndex) =>
+      currentIndex === index ? null : index
+    );
+  };
 
   return (
     <section
       id="faq"
-      className="scroll-mt-24 bg-white px-5 py-20 sm:px-8 lg:px-20"
+      className="scroll-mt-32 bg-[#F8FBFF] px-5 py-16 sm:px-8 sm:py-20 lg:px-12"
     >
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="font-bold uppercase tracking-[0.22em] text-[#00A866]">
+          <span className="inline-flex rounded-full border border-[#00D97E]/30 bg-[#ECFDF5] px-4 py-2 text-sm font-bold text-[#007F4D]">
             Frequently Asked Questions
-          </p>
+          </span>
 
-          <h2 className="mt-4 text-4xl font-bold tracking-tight text-[#062B5C] sm:text-5xl">
-            Everything You Need to Know
+          <h2 className="mt-5 text-3xl font-extrabold leading-tight text-[#062B5C] sm:text-4xl lg:text-5xl">
+            Questions before you
+            <span className="mt-2 block text-[#00A866]">
+              begin your journey?
+            </span>
           </h2>
 
-          <p className="mt-6 text-lg leading-8 text-slate-600">
-            Find answers to common questions about our courses, learning
-            approach, batches, and demo sessions.
+          <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
+            Find answers to common questions about our learning approach and
+            programs.
           </p>
-
-          <div className="mx-auto mt-6 h-1 w-20 rounded-full bg-[#00D97E]" />
         </div>
 
-        <div className="mt-14 space-y-4">
-          {questions.map((item, index) => {
-            const isOpen = openIndex === index;
+        <div className="mt-12 space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = activeIndex === index;
 
             return (
               <article
-                key={item.question}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                key={faq.question}
+                className={`overflow-hidden rounded-2xl border bg-white transition duration-300 ${
+                  isOpen
+                    ? "border-[#00D97E] shadow-md"
+                    : "border-slate-200 shadow-sm"
+                }`}
               >
                 <button
                   type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left sm:px-7"
+                  onClick={() => toggleFAQ(index)}
+                  className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left sm:px-6"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-lg font-bold text-[#062B5C]">
-                    {item.question}
+                  <span className="font-bold text-[#062B5C] sm:text-lg">
+                    {faq.question}
                   </span>
 
-                  <ChevronDown
-                    size={22}
-                    className={`shrink-0 text-[#00A866] transition duration-300 ${
-                      isOpen ? "rotate-180" : ""
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xl font-bold transition duration-300 ${
+                      isOpen
+                        ? "rotate-45 bg-[#00D97E] text-[#062B5C]"
+                        : "bg-slate-100 text-[#062B5C]"
                     }`}
-                    aria-hidden="true"
-                  />
+                  >
+                    +
+                  </span>
                 </button>
 
                 {isOpen && (
-                  <div className="border-t border-slate-100 px-6 py-5 sm:px-7">
-                    <p className="leading-8 text-slate-600">{item.answer}</p>
+                  <div className="border-t border-slate-100 px-5 pb-6 pt-4 sm:px-6">
+                    <p className="leading-7 text-slate-600">{faq.answer}</p>
                   </div>
                 )}
               </article>
@@ -110,21 +122,19 @@ export default function FAQ() {
           })}
         </div>
 
-        <div className="mt-12 rounded-3xl bg-[#062B5C] p-8 text-center text-white sm:p-10">
-          <h3 className="text-2xl font-bold sm:text-3xl">
-            Still Have a Question?
-          </h3>
-
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-blue-100">
-            Speak with us directly and receive guidance based on your learning
-            needs.
+        <div className="mt-10 text-center">
+          <p className="text-slate-600">
+            Still have a question about our programs?
           </p>
 
           <a
             href="#contact"
-            className="mt-7 inline-flex rounded-xl bg-[#00D97E] px-7 py-4 font-bold text-[#062B5C] transition hover:bg-[#00C970]"
+            className="mt-5 inline-flex items-center justify-center rounded-xl bg-[#062B5C] px-7 py-4 font-bold text-white transition duration-300 hover:-translate-y-1 hover:bg-[#0A4B8C]"
           >
-            Ask Us on WhatsApp
+            Contact Us
+            <span className="ml-2" aria-hidden="true">
+              →
+            </span>
           </a>
         </div>
       </div>
