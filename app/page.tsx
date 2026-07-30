@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import WhyChoose from "@/components/WhyChoose";
+import MentorJourney from "@/components/MentorJourney";
 import Courses from "@/components/Courses";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
@@ -14,6 +15,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
+      <WhyChoose />
+      <MentorJourney />
       <Courses />
       <Testimonials />
       <Contact />

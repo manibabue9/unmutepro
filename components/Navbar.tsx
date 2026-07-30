@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const navigationLinks = [
+const navigationLinks =  [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
+  { name: "Why Us", href: "#why" },
+  { name: "Mentor", href: "#mentor" },
   { name: "Courses", href: "#courses" },
   { name: "Testimonials", href: "#testimonials" },
   { name: "Contact", href: "#contact" },
@@ -39,7 +41,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop navigation */}
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-5 xl:flex>
           {navigationLinks.map((link) => (
             <a
               key={link.name}
@@ -53,7 +55,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <a
             href="#contact"
             className="inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-6 py-3 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg"
@@ -98,7 +100,7 @@ export default function Navbar() {
 
       {/* Mobile navigation */}
       {isMenuOpen && (
-        <div className="border-t border-slate-200 bg-white px-5 py-5 shadow-lg lg:hidden">
+        <div className="border-t border-slate-200 bg-white px-5 py-5 shadow-xl:hidden>
           <div className="mx-auto flex max-w-7xl flex-col gap-2">
             {navigationLinks.map((link) => (
               <a
