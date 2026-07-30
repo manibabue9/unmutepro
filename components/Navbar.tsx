@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const navigationLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
-  { name: "Why Us", href: "#why" },
+  { name: "Why Us", href: "#why-us" },
   { name: "Courses", href: "#courses" },
   { name: "Batches", href: "#batches" },
   { name: "Pricing", href: "#pricing" },
@@ -15,116 +16,136 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navigationLinks
+        .map((link) => document.querySelector(link.href))
+        .filter(Boolean) as HTMLElement[];
+
+      const currentSection = sections.find((section) => {
+        const position = section.getBoundingClientRect();
+
+        return position.top <= 150 && position.bottom >= 150;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavigation = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    event.preventDefault();
+
+    const section = document.querySelector(href);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8 lg:px-12">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">
+      {/* Main navbar */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Logo */}
-        <a
+        <Link
           href="#home"
-          onClick={closeMenu}
+          onClick={(event) => handleNavigation(event, "#home")}
           className="flex shrink-0 items-center"
-          aria-label="Go to Unmute Pro home"
+          aria-label="Unmute Pro Home"
         >
           <Image
             src="/images/logo.png"
-            alt="Unmute Pro - Your Silence Ends Here"
-            width={220}
-            height={100}
+            alt="Unmute Pro"
+            width={145}
+            height={55}
             priority
-            className="h-14 w-auto object-contain sm:h-16"
+            className="h-auto w-[110px] sm:w-[130px]"
           />
-        </a>
+        </Link>
 
         {/* Desktop navigation */}
-        <div className="hidden items-center gap-4 2xl:flex">
-          {navigationLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="group relative whitespace-nowrap text-sm font-semibold text-slate-700 transition hover:text-[#00A866]"
-            >
-              {link.name}
+        <nav className="hidden items-center gap-1 lg:flex">
+          {navigationLinks.map((link) => {
+            const sectionName = link.href.replace("#", "");
+            const isActive = activeSection === sectionName;
 
-              <span className="absolute -bottom-2 left-0 h-0.5 w-0 bg-[#00D97E] transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
-        </div>
-
-        {/* Desktop CTA */}
-        <div className="hidden 2xl:block">
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-5 py-3 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg"
-          >
-            Book Free Demo
-          </a>
-        </div>
-
-        {/* Mobile and laptop menu button */}
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen((current) => !current)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-[#062B5C] transition hover:bg-slate-50 2xl:hidden"
-          aria-label="Toggle navigation menu"
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="h-6 w-6"
-              aria-hidden="true"
-            >
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          ) : (
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="h-6 w-6"
-              aria-hidden="true"
-            >
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          )}
-        </button>
-      </nav>
-
-      {/* Mobile and laptop navigation */}
-      {isMenuOpen && (
-        <div className="border-t border-slate-200 bg-white px-5 py-5 shadow-lg 2xl:hidden">
-          <div className="mx-auto grid max-w-7xl gap-2 sm:grid-cols-2">
-            {navigationLinks.map((link) => (
-              <a
+            return (
+              <Link
                 key={link.name}
                 href={link.href}
-                onClick={closeMenu}
-                className="rounded-xl px-4 py-3 font-semibold text-slate-700 transition hover:bg-[#ECFDF5] hover:text-[#00A866]"
+                onClick={(event) => handleNavigation(event, link.href)}
+                className={`rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200 ${
+                  isActive
+                    ? "bg-emerald-100 text-emerald-700"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-emerald-600"
+                }`}
               >
                 {link.name}
-              </a>
-            ))}
+              </Link>
+            );
+          })}
+        </nav>
 
-            <a
-              href="#contact"
-              onClick={closeMenu}
-              className="mt-2 rounded-xl bg-[#00D97E] px-5 py-3 text-center font-bold text-[#062B5C] transition hover:bg-[#00C970] sm:col-span-2"
-            >
-              Book Free Demo
-            </a>
-          </div>
-        </div>
-      )}
+        {/* Desktop demo button */}
+        <Link
+          href="#contact"
+          onClick={(event) => handleNavigation(event, "#contact")}
+          className="hidden rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-lg lg:inline-flex"
+        >
+          Book Free Demo
+        </Link>
+
+        {/* Mobile demo button */}
+        <Link
+          href="#contact"
+          onClick={(event) => handleNavigation(event, "#contact")}
+          className="rounded-full bg-emerald-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-600 lg:hidden"
+        >
+          Free Demo
+        </Link>
+      </div>
+
+      {/* Mobile and tablet horizontal navigation */}
+      <div className="border-t border-slate-100 bg-white lg:hidden">
+        <nav
+          className="flex gap-2 overflow-x-auto px-4 py-2.5 scrollbar-hide"
+          aria-label="Mobile Navigation"
+        >
+          {navigationLinks.map((link) => {
+            const sectionName = link.href.replace("#", "");
+            const isActive = activeSection === sectionName;
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(event) => handleNavigation(event, link.href)}
+                className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+                  isActive
+                    ? "bg-emerald-500 text-white shadow-sm"
+                    : "border border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:text-emerald-600"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
     </header>
   );
 }
