@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.unmutepro.com"),
+
   title: {
     default: "Unmute Pro | Your Silence Ends Here",
     template: "%s | Unmute Pro",
   },
 
   description:
-    "Build confidence in spoken English, interview skills and workplace communication through practical learning with Unmute Pro.",
+    "Build confidence in spoken English, interviews and workplace communication through practical learning with Unmute Pro.",
 
   keywords: [
     "Spoken English",
@@ -17,59 +19,39 @@ export const metadata: Metadata = {
     "Interview Preparation",
     "Corporate Communication",
     "Confidence Building",
-    "Online Spoken English",
     "Unmute Pro",
   ],
 
-  authors: [
-    {
-      name: "Unmute Pro",
-    },
-  ],
-
-  creator: "Unmute Pro",
-
-  publisher: "Unmute Pro",
-
-  metadataBase: new URL("https://www.unmutepro.com"),
-
   alternates: {
-    canonical: "/",
+    canonical: "https://www.unmutepro.com",
   },
 
   openGraph: {
     title: "Unmute Pro | Your Silence Ends Here",
-
     description:
-      "Build confidence in spoken English, interview skills and workplace communication.",
-
+      "Build confidence in spoken English, interviews and workplace communication.",
     url: "https://www.unmutepro.com",
-
     siteName: "Unmute Pro",
+    type: "website",
+    locale: "en_IN",
 
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://www.unmutepro.com/unmutepro-share.jpg",
         width: 1200,
         height: 630,
-        alt: "Unmute Pro",
+        alt: "Unmute Pro spoken English and confidence training",
+        type: "image/jpeg",
       },
     ],
-
-    locale: "en_US",
-
-    type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-
     title: "Unmute Pro | Your Silence Ends Here",
-
     description:
-      "Build confidence in spoken English, interview skills and workplace communication.",
-
-    images: ["/og-image.jpg"],
+      "Build confidence in spoken English, interviews and workplace communication.",
+    images: ["https://www.unmutepro.com/unmutepro-share.jpg"],
   },
 
   icons: {
@@ -81,9 +63,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body>{children}</body>
