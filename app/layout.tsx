@@ -1,28 +1,23 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.unmutepro.com"),
-
   title: {
-    default: "Unmute Pro | Spoken English and Communication Training",
+    default: "Unmute Pro | Your Silence Ends Here",
     template: "%s | Unmute Pro",
   },
 
   description:
-    "Unmute Pro provides practical spoken English, interview preparation, corporate communication, and personality development training for students, job seekers, and professionals.",
+    "Build confidence in spoken English, interview skills and workplace communication through practical learning with Unmute Pro.",
 
   keywords: [
-    "spoken English classes",
-    "spoken English course",
-    "English speaking course",
-    "online spoken English classes",
-    "interview preparation",
-    "corporate communication training",
-    "personality development",
-    "communication skills",
-    "English communication skills",
+    "Spoken English",
+    "English Speaking Course",
+    "Communication Skills",
+    "Interview Preparation",
+    "Corporate Communication",
+    "Confidence Building",
+    "Online Spoken English",
     "Unmute Pro",
   ],
 
@@ -33,7 +28,10 @@ export const metadata: Metadata = {
   ],
 
   creator: "Unmute Pro",
+
   publisher: "Unmute Pro",
+
+  metadataBase: new URL("https://www.unmutepro.com"),
 
   alternates: {
     canonical: "/",
@@ -41,72 +39,54 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "Unmute Pro | Your Silence Ends Here",
+
     description:
-      "Build confidence in spoken English, interviews, workplace communication, presentations, and professional situations.",
+      "Build confidence in spoken English, interview skills and workplace communication.",
+
     url: "https://www.unmutepro.com",
+
     siteName: "Unmute Pro",
-    locale: "en_IN",
+
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Unmute Pro",
+      },
+    ],
+
+    locale: "en_US",
+
     type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
+
     title: "Unmute Pro | Your Silence Ends Here",
+
     description:
-      "Practical spoken English and career communication training for students, job seekers, and professionals.",
+      "Build confidence in spoken English, interview skills and workplace communication.",
+
+    images: ["/og-image.jpg"],
   },
 
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  name: "Unmute Pro",
-  url: "https://www.unmutepro.com",
-  slogan: "Your Silence Ends Here",
-  telephone: "+91-9392209162",
-  description:
-    "Practical spoken English, interview preparation, corporate communication, and personality development training.",
-  founder: {
-    "@type": "Person",
-    name: "Manibabu",
-    jobTitle: "Mentor and Communication Guide",
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "India",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-9392209162",
-    contactType: "customer support",
-    availableLanguage: ["English", "Telugu"],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-          }}
-        />
-
-        {children}
-
-        <Analytics />
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

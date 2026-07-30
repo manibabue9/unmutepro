@@ -9,8 +9,6 @@ const navigationLinks = [
   { name: "About", href: "#about" },
   { name: "Why Us", href: "#why-us" },
   { name: "Courses", href: "#courses" },
-  { name: "Batches", href: "#batches" },
-  { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ];
