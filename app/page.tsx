@@ -4,8 +4,6 @@ import About from "@/components/About";
 import WhyUs from "@/components/WhyUs";
 import MentorJourney from "@/components/MentorJourney";
 import Courses from "@/components/Courses";
-import BatchSchedule from "@/components/BatchSchedule";
-import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import BlogPreview from "@/components/BlogPreview";
 import FAQ from "@/components/FAQ";
@@ -20,10 +18,8 @@ export default function Home() {
       <Hero />
       <About />
       <WhyUs />
-      <MentorJourney />
       <Courses />
-      <BatchSchedule />
-      <Pricing />
+      <MentorJourney />
       <Testimonials />
       <BlogPreview />
       <FAQ />
