@@ -7,9 +7,10 @@ const navigationLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Why Us", href: "#why" },
-  { name: "Mentor", href: "#mentor" },
   { name: "Courses", href: "#courses" },
-  { name: "Testimonials", href: "#testimonials" },
+  { name: "Batches", href: "#batches" },
+  { name: "Pricing", href: "#pricing" },
+  { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -23,10 +24,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-8 lg:px-12">
+        {/* Logo */}
         <a
           href="#home"
           onClick={closeMenu}
-          className="flex items-center"
+          className="flex shrink-0 items-center"
           aria-label="Go to Unmute Pro home"
         >
           <Image
@@ -39,12 +41,13 @@ export default function Navbar() {
           />
         </a>
 
-        <div className="hidden items-center gap-5 xl:flex">
+        {/* Desktop navigation */}
+        <div className="hidden items-center gap-4 2xl:flex">
           {navigationLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="group relative font-semibold text-slate-700 transition hover:text-[#00A866]"
+              className="group relative whitespace-nowrap text-sm font-semibold text-slate-700 transition hover:text-[#00A866]"
             >
               {link.name}
 
@@ -53,19 +56,21 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden xl:block">
+        {/* Desktop CTA */}
+        <div className="hidden 2xl:block">
           <a
             href="#contact"
-            className="inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-6 py-3 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg"
+            className="inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-5 py-3 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg"
           >
             Book Free Demo
           </a>
         </div>
 
+        {/* Mobile and laptop menu button */}
         <button
           type="button"
           onClick={() => setIsMenuOpen((current) => !current)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-[#062B5C] transition hover:bg-slate-50 xl:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-[#062B5C] transition hover:bg-slate-50 2xl:hidden"
           aria-label="Toggle navigation menu"
           aria-expanded={isMenuOpen}
         >
@@ -95,9 +100,10 @@ export default function Navbar() {
         </button>
       </nav>
 
+      {/* Mobile and laptop navigation */}
       {isMenuOpen && (
-        <div className="border-t border-slate-200 bg-white px-5 py-5 shadow-lg xl:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-2">
+        <div className="border-t border-slate-200 bg-white px-5 py-5 shadow-lg 2xl:hidden">
+          <div className="mx-auto grid max-w-7xl gap-2 sm:grid-cols-2">
             {navigationLinks.map((link) => (
               <a
                 key={link.name}
@@ -112,7 +118,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={closeMenu}
-              className="mt-3 rounded-xl bg-[#00D97E] px-5 py-3 text-center font-bold text-[#062B5C] transition hover:bg-[#00C970]"
+              className="mt-2 rounded-xl bg-[#00D97E] px-5 py-3 text-center font-bold text-[#062B5C] transition hover:bg-[#00C970] sm:col-span-2"
             >
               Book Free Demo
             </a>
