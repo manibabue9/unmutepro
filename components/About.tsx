@@ -20,7 +20,7 @@ export default function About() {
 
             <div className="relative overflow-hidden rounded-[28px] bg-slate-100 shadow-xl">
               <Image
-                src="/images/manibabu.png"
+                src="/images/manibabu.jpg"
                 alt="Manibabu, Communication Mentor at Unmute Pro"
                 width={500}
                 height={600}
