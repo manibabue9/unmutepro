@@ -9,6 +9,7 @@ const navigationLinks = [
   { name: "About", href: "#about", section: true },
   { name: "Why Us", href: "#why-us", section: true },
   { name: "Courses", href: "#courses", section: true },
+  { name: "Resources", href: "/resources", section: false },
   { name: "Blog", href: "/blog", section: false },
   { name: "FAQ", href: "#faq", section: true },
   { name: "Contact", href: "#contact", section: true },
@@ -97,11 +98,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={
-                  link.section
-                    ? (event) => handleNavigation(event, link.href)
-                    : undefined
-                }
+                onClick={link.section ? (event) => handleNavigation(event, link.href) : undefined}
                 aria-current={isActive ? "page" : undefined}
                 className={`rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
@@ -139,7 +136,7 @@ export default function Navbar() {
           aria-label="Mobile navigation"
         >
           {navigationLinks.map((link) => {
-            const sectionName = link.section ? link.href.replace("#", "") : "blog";
+            const sectionName = link.section ? link.href.replace("#", "") : link.name.toLowerCase();
             const isActive = link.section && activeSection === sectionName;
 
             return (
@@ -147,11 +144,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 data-section={sectionName}
-                onClick={
-                  link.section
-                    ? (event) => handleNavigation(event, link.href)
-                    : undefined
-                }
+                onClick={link.section ? (event) => handleNavigation(event, link.href) : undefined}
                 aria-current={isActive ? "page" : undefined}
                 className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
