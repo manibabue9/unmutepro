@@ -11,6 +11,10 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const [formError, setFormError] = useState("");
 
+  const handleMobileChange = (value: string) => {
+    setMobile(value.replace(/\D/g, "").slice(0, 10));
+  };
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError("");
@@ -29,16 +33,19 @@ export default function Contact() {
     }
 
     const whatsappMessage = `
-Hello Unmute Pro,
+Hello Unmute Pro 👋
 
-I would like to book a free demo session.
+I would like to book a FREE demo session.
 
-Name: ${cleanName}
-Mobile Number: ${cleanMobile}
-Interested Course: ${course}
-Message: ${message.trim() || "No additional message"}
+My details:
+👤 Name: ${cleanName}
+📱 Mobile: +91 ${cleanMobile}
+📘 Course: ${course}
+📝 Goal: ${message.trim() || "I would like guidance on choosing the right program."}
 
-Please contact me with the available demo timings.
+Please share the available demo timings.
+
+Thank you.
     `.trim();
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -106,13 +113,15 @@ Please contact me with the available demo timings.
                 </div>
 
                 <div>
-                  <p className="text-sm text-blue-200">Call Us</p>
+                  <p className="text-sm text-blue-200">Call Our Mentor</p>
                   <p className="mt-1 font-bold">+91 93922 09162</p>
                 </div>
               </a>
 
               <a
-                href={`https://wa.me/${phoneNumber}`}
+                href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+                  "Hello Unmute Pro 👋 I would like to know more about your programs and free demo timings."
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15"
@@ -123,7 +132,7 @@ Please contact me with the available demo timings.
                 </div>
 
                 <div>
-                  <p className="text-sm text-blue-200">WhatsApp</p>
+                  <p className="text-sm text-blue-200">WhatsApp Support</p>
                   <p className="mt-1 font-bold">Chat with Unmute Pro</p>
                 </div>
               </a>
@@ -158,8 +167,8 @@ Please contact me with the available demo timings.
             </h3>
 
             <p className="mt-3 leading-7 text-slate-600">
-              Fill in the form below. After submitting, WhatsApp will open with
-              your details ready to send.
+              Fill in the form below. WhatsApp will open with your details ready
+              to send to Unmute Pro.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6" noValidate>
@@ -203,22 +212,27 @@ Please contact me with the available demo timings.
                   Mobile Number
                 </label>
 
-                <input
-                  id="mobile"
-                  name="mobile"
-                  type="tel"
-                  inputMode="numeric"
-                  autoComplete="tel"
-                  value={mobile}
-                  onChange={(event) => setMobile(event.target.value)}
-                  required
-                  maxLength={14}
-                  placeholder="Enter your 10-digit mobile number"
-                  aria-describedby="mobile-help"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
-                />
+                <div className="flex overflow-hidden rounded-xl border border-slate-300 bg-white transition focus-within:border-[#00D97E] focus-within:ring-4 focus-within:ring-[#00D97E]/15">
+                  <span className="flex items-center border-r border-slate-300 bg-slate-50 px-4 font-bold text-[#062B5C]">
+                    +91
+                  </span>
+                  <input
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    value={mobile}
+                    onChange={(event) => handleMobileChange(event.target.value)}
+                    required
+                    maxLength={10}
+                    placeholder="10-digit mobile number"
+                    aria-describedby="mobile-help"
+                    className="min-w-0 flex-1 px-4 py-4 text-slate-800 outline-none"
+                  />
+                </div>
                 <p id="mobile-help" className="mt-2 text-sm text-slate-500">
-                  Enter an Indian mobile number without the country code.
+                  Enter only your 10-digit Indian mobile number.
                 </p>
               </div>
 
@@ -250,7 +264,7 @@ Please contact me with the available demo timings.
                   htmlFor="message"
                   className="mb-2 block font-semibold text-[#062B5C]"
                 >
-                  Message
+                  Learning Goal
                 </label>
 
                 <textarea
@@ -260,7 +274,7 @@ Please contact me with the available demo timings.
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
                   maxLength={500}
-                  placeholder="Tell us about your learning goal"
+                  placeholder="Tell us what you want to improve"
                   className="w-full resize-none rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
                 />
               </div>
@@ -269,12 +283,14 @@ Please contact me with the available demo timings.
                 type="submit"
                 className="w-full rounded-xl bg-[#00D97E] px-6 py-4 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg"
               >
-                Continue on WhatsApp
+                💬 Book My Free Demo
               </button>
 
-              <p className="text-center text-sm leading-6 text-slate-500">
-                Your message will only be sent after you press Send in WhatsApp.
-              </p>
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-center text-sm font-medium text-slate-500">
+                <span>✓ Free demo</span>
+                <span>✓ No spam</span>
+                <span>✓ You press Send</span>
+              </div>
             </form>
           </div>
         </div>
