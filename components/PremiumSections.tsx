@@ -63,7 +63,7 @@ export default function PremiumSections() {
         </div>
       </section>
 
-      <section className="bg-[#F8FBFF] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
+      <section id="why-us" className="scroll-mt-32 bg-[#F8FBFF] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex rounded-full bg-[#ECFDF5] px-4 py-2 text-sm font-bold text-[#007F4D]">Why Choose Unmute Pro</span>
