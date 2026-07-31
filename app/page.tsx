@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import PremiumSections from "@/components/PremiumSections";
+import About from "@/components/About";
 import Courses from "@/components/Courses";
 import LearningJourney from "@/components/LearningJourney";
 import LearnerOutcomes from "@/components/LearnerOutcomes";
@@ -15,8 +15,8 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
-      <About />
       <PremiumSections />
+      <About />
       <Courses />
       <LearningJourney />
       <LearnerOutcomes />
