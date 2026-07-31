@@ -118,7 +118,7 @@ export default function Navbar() {
           onClick={(event) => handleNavigation(event, "#contact")}
           className="hidden rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-lg lg:inline-flex"
         >
-          Book Free Demo
+          Book Demo · ₹99
         </Link>
 
         <Link
@@ -126,7 +126,7 @@ export default function Navbar() {
           onClick={(event) => handleNavigation(event, "#contact")}
           className="rounded-full bg-emerald-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-600 lg:hidden"
         >
-          Free Demo
+          Demo ₹99
         </Link>
       </div>
 
