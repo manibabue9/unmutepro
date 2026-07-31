@@ -31,8 +31,8 @@ export default function PremiumSections() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) {
-      setProgress(100);
-      return;
+      const frame = window.requestAnimationFrame(() => setProgress(100));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     let value = 0;

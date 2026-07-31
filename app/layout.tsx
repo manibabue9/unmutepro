@@ -8,6 +8,7 @@ const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.unmutepro.com"),
+  manifest: "/manifest.webmanifest",
   title: {
     default: "Unmute Pro | Spoken English & Confidence Training",
     template: "%s | Unmute Pro",
