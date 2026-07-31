@@ -9,19 +9,34 @@ export default function Contact() {
   const [mobile, setMobile] = useState("");
   const [course, setCourse] = useState("Spoken English");
   const [message, setMessage] = useState("");
+  const [formError, setFormError] = useState("");
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setFormError("");
+
+    const cleanName = name.trim();
+    const cleanMobile = mobile.replace(/\D/g, "");
+
+    if (cleanName.length < 2) {
+      setFormError("Please enter your full name.");
+      return;
+    }
+
+    if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
+      setFormError("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
 
     const whatsappMessage = `
 Hello Unmute Pro,
 
 I would like to book a free demo session.
 
-Name: ${name}
-Mobile Number: ${mobile}
+Name: ${cleanName}
+Mobile Number: ${cleanMobile}
 Interested Course: ${course}
-Message: ${message || "No additional message"}
+Message: ${message.trim() || "No additional message"}
 
 Please contact me with the available demo timings.
     `.trim();
@@ -30,16 +45,23 @@ Please contact me with the available demo timings.
       whatsappMessage
     )}`;
 
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    const newWindow = window.open(
+      whatsappUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    if (!newWindow) {
+      window.location.href = whatsappUrl;
+    }
   };
 
   return (
     <section
       id="contact"
-      className="bg-gradient-to-b from-[#EFF6FF] to-white px-5 py-20 sm:px-8 lg:px-20"
+      className="scroll-mt-32 bg-gradient-to-b from-[#EFF6FF] to-white px-5 py-20 sm:px-8 lg:px-20"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-bold uppercase tracking-[0.2em] text-[#00A866]">
             Contact Us
@@ -58,7 +80,6 @@ Please contact me with the available demo timings.
         </div>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          {/* Contact information */}
           <div className="rounded-3xl bg-[#062B5C] p-8 text-white shadow-2xl sm:p-10">
             <p className="font-bold uppercase tracking-wider text-[#00D97E]">
               Let&apos;s Connect
@@ -78,6 +99,7 @@ Please contact me with the available demo timings.
               <a
                 href="tel:+919392209162"
                 className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15"
+                aria-label="Call Unmute Pro at +91 93922 09162"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">
                   ☎
@@ -92,8 +114,9 @@ Please contact me with the available demo timings.
               <a
                 href={`https://wa.me/${phoneNumber}`}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15"
+                aria-label="Chat with Unmute Pro on WhatsApp"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">
                   💬
@@ -129,7 +152,6 @@ Please contact me with the available demo timings.
             </div>
           </div>
 
-          {/* Demo form */}
           <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl sm:p-10">
             <h3 className="text-2xl font-bold text-[#062B5C]">
               Request a Free Demo
@@ -140,7 +162,17 @@ Please contact me with the available demo timings.
               your details ready to send.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6" noValidate>
+              {formError && (
+                <div
+                  role="alert"
+                  aria-live="polite"
+                  className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700"
+                >
+                  {formError}
+                </div>
+              )}
+
               <div>
                 <label
                   htmlFor="name"
@@ -151,10 +183,13 @@ Please contact me with the available demo timings.
 
                 <input
                   id="name"
+                  name="name"
                   type="text"
+                  autoComplete="name"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   required
+                  minLength={2}
                   placeholder="Enter your full name"
                   className="w-full rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
                 />
@@ -170,13 +205,21 @@ Please contact me with the available demo timings.
 
                 <input
                   id="mobile"
+                  name="mobile"
                   type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel"
                   value={mobile}
                   onChange={(event) => setMobile(event.target.value)}
                   required
-                  placeholder="Enter your mobile number"
+                  maxLength={14}
+                  placeholder="Enter your 10-digit mobile number"
+                  aria-describedby="mobile-help"
                   className="w-full rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
                 />
+                <p id="mobile-help" className="mt-2 text-sm text-slate-500">
+                  Enter an Indian mobile number without the country code.
+                </p>
               </div>
 
               <div>
@@ -189,6 +232,7 @@ Please contact me with the available demo timings.
 
                 <select
                   id="course"
+                  name="course"
                   value={course}
                   onChange={(event) => setCourse(event.target.value)}
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
@@ -211,9 +255,11 @@ Please contact me with the available demo timings.
 
                 <textarea
                   id="message"
+                  name="message"
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
+                  maxLength={500}
                   placeholder="Tell us about your learning goal"
                   className="w-full resize-none rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15"
                 />
@@ -227,8 +273,7 @@ Please contact me with the available demo timings.
               </button>
 
               <p className="text-center text-sm leading-6 text-slate-500">
-                Submitting this form will open WhatsApp. Your message will only
-                be sent after you press Send in WhatsApp.
+                Your message will only be sent after you press Send in WhatsApp.
               </p>
             </form>
           </div>
