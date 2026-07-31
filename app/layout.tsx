@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.unmutepro.com"),
@@ -15,17 +19,14 @@ export const metadata: Metadata = {
     "English speaking course",
     "Communication skills training",
     "Interview preparation",
-    "Corporate communication",
     "Confidence building",
-    "Spoken English Hyderabad",
     "Unmute Pro",
   ],
   authors: [{ name: "Unmute Pro" }],
   creator: "Unmute Pro",
   publisher: "Unmute Pro",
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
+  verification: googleVerification ? { google: googleVerification } : undefined,
   openGraph: {
     title: "Unmute Pro | Your Silence Ends Here",
     description:
@@ -34,15 +35,13 @@ export const metadata: Metadata = {
     siteName: "Unmute Pro",
     type: "website",
     locale: "en_IN",
-    images: [
-      {
-        url: "/unmutepro-share.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Unmute Pro spoken English and confidence training",
-        type: "image/jpeg",
-      },
-    ],
+    images: [{
+      url: "/unmutepro-share.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Unmute Pro spoken English and confidence training",
+      type: "image/jpeg",
+    }],
   },
   twitter: {
     card: "summary_large_image",
@@ -51,11 +50,7 @@ export const metadata: Metadata = {
       "Build confidence through practical spoken English, interview and workplace communication training.",
     images: ["/unmutepro-share.jpg"],
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
+  icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/favicon.ico" },
   robots: {
     index: true,
     follow: true,
@@ -82,19 +77,12 @@ const organizationSchema = {
   url: "https://www.unmutepro.com",
   logo: "https://www.unmutepro.com/images/logo.png",
   image: "https://www.unmutepro.com/unmutepro-share.jpg",
-  description:
-    "Practical spoken English, interview preparation and workplace communication training focused on confidence.",
+  email: "unmuteproofficial@gmail.com",
   telephone: "+91-93922-09162",
-  areaServed: {
-    "@type": "Country",
-    name: "India",
-  },
-  founder: {
-    "@type": "Person",
-    name: "Manibabu",
-    jobTitle: "Communication Mentor",
-  },
-  sameAs: [],
+  description:
+    "Practical spoken English, interview preparation and communication training focused on confidence.",
+  areaServed: { "@type": "Country", name: "India" },
+  founder: { "@type": "Person", name: "Manibabu", jobTitle: "Communication Mentor" },
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+91-93922-09162",
@@ -104,11 +92,7 @@ const organizationSchema = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en-IN">
       <body>
@@ -120,6 +104,17 @@ export default function RootLayout({
         />
         {children}
         <Analytics />
+        {gaMeasurementId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaMeasurementId}',{anonymize_ip:true});`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
