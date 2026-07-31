@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const navigationLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Why Us", href: "#why-us" },
-  { name: "Courses", href: "#courses" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "#home", section: true },
+  { name: "About", href: "#about", section: true },
+  { name: "Why Us", href: "#why-us", section: true },
+  { name: "Courses", href: "#courses", section: true },
+  { name: "Blog", href: "/blog", section: false },
+  { name: "FAQ", href: "#faq", section: true },
+  { name: "Contact", href: "#contact", section: true },
 ];
 
 export default function Navbar() {
@@ -19,6 +20,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const sections = navigationLinks
+      .filter((link) => link.section)
       .map((link) => document.querySelector<HTMLElement>(link.href))
       .filter((section): section is HTMLElement => Boolean(section));
 
@@ -28,9 +30,7 @@ export default function Navbar() {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visibleEntry) {
-          setActiveSection(visibleEntry.target.id);
-        }
+        if (visibleEntry) setActiveSection(visibleEntry.target.id);
       },
       {
         rootMargin: "-28% 0px -55% 0px",
@@ -39,7 +39,6 @@ export default function Navbar() {
     );
 
     sections.forEach((section) => observer.observe(section));
-
     return () => observer.disconnect();
   }, []);
 
@@ -60,7 +59,6 @@ export default function Navbar() {
     href: string
   ) => {
     event.preventDefault();
-
     const section = document.querySelector<HTMLElement>(href);
 
     if (section) {
@@ -92,14 +90,18 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {navigationLinks.map((link) => {
-            const sectionName = link.href.replace("#", "");
-            const isActive = activeSection === sectionName;
+            const sectionName = link.section ? link.href.replace("#", "") : "";
+            const isActive = link.section && activeSection === sectionName;
 
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={(event) => handleNavigation(event, link.href)}
+                onClick={
+                  link.section
+                    ? (event) => handleNavigation(event, link.href)
+                    : undefined
+                }
                 aria-current={isActive ? "page" : undefined}
                 className={`rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
@@ -137,15 +139,19 @@ export default function Navbar() {
           aria-label="Mobile navigation"
         >
           {navigationLinks.map((link) => {
-            const sectionName = link.href.replace("#", "");
-            const isActive = activeSection === sectionName;
+            const sectionName = link.section ? link.href.replace("#", "") : "blog";
+            const isActive = link.section && activeSection === sectionName;
 
             return (
               <Link
                 key={link.name}
                 href={link.href}
                 data-section={sectionName}
-                onClick={(event) => handleNavigation(event, link.href)}
+                onClick={
+                  link.section
+                    ? (event) => handleNavigation(event, link.href)
+                    : undefined
+                }
                 aria-current={isActive ? "page" : undefined}
                 className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
