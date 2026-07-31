@@ -1,10 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import PremiumSections from "@/components/PremiumSections";
 import About from "@/components/About";
-import WhyUs from "@/components/WhyUs";
 import Courses from "@/components/Courses";
 import LearningJourney from "@/components/LearningJourney";
-import LearnerOutcomes  from "@/components/LearnerOutcomes";
+import LearnerOutcomes from "@/components/LearnerOutcomes";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -15,11 +15,11 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <PremiumSections />
       <About />
-      <WhyUs />
       <Courses />
       <LearningJourney />
-      <LearnerOutcomes  />
+      <LearnerOutcomes />
       <FAQ />
       <Contact />
       <Footer />
