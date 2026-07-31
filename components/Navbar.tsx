@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const navigationLinks = [
   { name: "Home", href: "#home" },
@@ -15,28 +15,45 @@ const navigationLinks = [
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
+  const mobileNavRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navigationLinks
-        .map((link) => document.querySelector(link.href))
-        .filter(Boolean) as HTMLElement[];
+    const sections = navigationLinks
+      .map((link) => document.querySelector<HTMLElement>(link.href))
+      .filter((section): section is HTMLElement => Boolean(section));
 
-      const currentSection = sections.find((section) => {
-        const position = section.getBoundingClientRect();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        return position.top <= 150 && position.bottom >= 150;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id);
+        if (visibleEntry) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      {
+        rootMargin: "-28% 0px -55% 0px",
+        threshold: [0.05, 0.2, 0.5],
       }
-    };
+    );
 
-    window.addEventListener("scroll", handleScroll);
+    sections.forEach((section) => observer.observe(section));
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const activeLink = mobileNavRef.current?.querySelector<HTMLElement>(
+      `[data-section="${activeSection}"]`
+    );
+
+    activeLink?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeSection]);
 
   const handleNavigation = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -44,26 +61,24 @@ export default function Navbar() {
   ) => {
     event.preventDefault();
 
-    const section = document.querySelector(href);
+    const section = document.querySelector<HTMLElement>(href);
 
     if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      const sectionName = href.replace("#", "");
+      setActiveSection(sectionName);
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", href);
     }
   };
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md">
-      {/* Main navbar */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        {/* Logo */}
         <Link
           href="#home"
           onClick={(event) => handleNavigation(event, "#home")}
-          className="flex shrink-0 items-center"
-          aria-label="Unmute Pro Home"
+          className="flex shrink-0 items-center rounded-md"
+          aria-label="Unmute Pro home"
         >
           <Image
             src="/images/logo.png"
@@ -75,8 +90,7 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop navigation */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
           {navigationLinks.map((link) => {
             const sectionName = link.href.replace("#", "");
             const isActive = activeSection === sectionName;
@@ -86,6 +100,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(event) => handleNavigation(event, link.href)}
+                aria-current={isActive ? "page" : undefined}
                 className={`rounded-full px-3 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
                     ? "bg-emerald-100 text-emerald-700"
@@ -98,7 +113,6 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Desktop demo button */}
         <Link
           href="#contact"
           onClick={(event) => handleNavigation(event, "#contact")}
@@ -107,7 +121,6 @@ export default function Navbar() {
           Book Free Demo
         </Link>
 
-        {/* Mobile demo button */}
         <Link
           href="#contact"
           onClick={(event) => handleNavigation(event, "#contact")}
@@ -117,11 +130,11 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* Mobile and tablet horizontal navigation */}
       <div className="border-t border-slate-100 bg-white lg:hidden">
         <nav
+          ref={mobileNavRef}
           className="flex gap-2 overflow-x-auto px-4 py-2.5 scrollbar-hide"
-          aria-label="Mobile Navigation"
+          aria-label="Mobile navigation"
         >
           {navigationLinks.map((link) => {
             const sectionName = link.href.replace("#", "");
@@ -131,7 +144,9 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
+                data-section={sectionName}
                 onClick={(event) => handleNavigation(event, link.href)}
+                aria-current={isActive ? "page" : undefined}
                 className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive
                     ? "bg-emerald-500 text-white shadow-sm"
