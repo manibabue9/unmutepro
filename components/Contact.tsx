@@ -33,17 +33,17 @@ export default function Contact() {
     }
 
     const whatsappMessage = `
-Hello Unmute Pro 👋
+Hello Unmute Pro ðŸ‘‹
 
-I would like to reserve a ₹99 demo session.
+I would like to book a demo session.
 
 My details:
-👤 Name: ${cleanName}
-📱 Mobile: +91 ${cleanMobile}
-📘 Program: ${course}
-📝 Goal: ${message.trim() || "I would like guidance on choosing the right program."}
+ðŸ‘¤ Name: ${cleanName}
+ðŸ“± Mobile: +91 ${cleanMobile}
+ðŸ“˜ Program: ${course}
+ðŸ“ Goal: ${message.trim() || "I would like guidance on choosing the right program."}
 
-I understand that the ₹99 booking amount will be adjusted against the course fee if I enrol.
+Please share the available demo timings and programme details.
 
 Please share the available demo timings.
 
@@ -60,8 +60,8 @@ Thank you.
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <p className="font-bold uppercase tracking-[0.2em] text-[#00A866]">Contact Us</p>
-          <h2 className="mt-3 text-4xl font-bold tracking-tight text-[#062B5C] sm:text-5xl">Reserve Your ₹99 Demo Session</h2>
-          <p className="mt-5 text-lg leading-8 text-slate-600">Take the first step toward confident communication. The ₹99 booking amount is adjusted against your course fee when you enrol.</p>
+          <h2 className="mt-3 text-4xl font-bold tracking-tight text-[#062B5C] sm:text-5xl">Book Your Demo Session</h2>
+          <p className="mt-5 text-lg leading-8 text-slate-600">Take the first step toward confident communication. Choose a convenient time to speak with an Unmute Pro mentor.</p>
           <div className="mx-auto mt-6 h-1 w-20 rounded-full bg-[#00D97E]" />
         </div>
 
@@ -73,18 +73,18 @@ Thank you.
 
             <div className="mt-9 space-y-5">
               <a href="tel:+919392209162" className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15" aria-label="Call Unmute Pro at +91 93922 09162">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">☎</div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">â˜Ž</div>
                 <div><p className="text-sm text-blue-200">Call Our Mentor</p><p className="mt-1 font-bold">+91 93922 09162</p></div>
               </a>
 
-              <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hello Unmute Pro 👋 I would like to know more about the ₹99 demo booking and available timings.")}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15" aria-label="Chat with Unmute Pro on WhatsApp">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">💬</div>
+              <a href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent("Hello Unmute Pro ðŸ‘‹ I would like to book a demo and know the available timings.")}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 transition hover:bg-white/15" aria-label="Chat with Unmute Pro on WhatsApp">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">ðŸ’¬</div>
                 <div><p className="text-sm text-blue-200">WhatsApp Support</p><p className="mt-1 font-bold">Chat with Unmute Pro</p></div>
               </a>
 
               <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">₹</div>
-                <div><p className="text-sm text-blue-200">Demo Booking</p><p className="mt-1 font-bold">₹99 · Adjusted on Enrolment</p></div>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#00D97E] text-xl text-[#062B5C]">â‚¹</div>
+                <div><p className="text-sm text-blue-200">Demo Booking</p><p className="mt-1 font-bold">Choose a convenient time</p></div>
               </div>
             </div>
 
@@ -121,7 +121,7 @@ Thank you.
                   <option>Confidence English Program</option>
                   <option>Interview Mastery</option>
                   <option>Personal Mentoring</option>
-                  <option>Not Sure — Need Guidance</option>
+                  <option>Not Sure â€” Need Guidance</option>
                 </select>
               </div>
 
@@ -130,9 +130,9 @@ Thank you.
                 <textarea id="message" name="message" value={message} onChange={(event) => setMessage(event.target.value)} rows={5} maxLength={500} placeholder="Tell us what you want to improve" className="w-full resize-none rounded-xl border border-slate-300 px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15" />
               </div>
 
-              <button type="submit" className="w-full rounded-xl bg-[#00D97E] px-6 py-4 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg">💬 Reserve My Demo · ₹99</button>
+              <button type="submit" className="w-full rounded-xl bg-[#00D97E] px-6 py-4 font-bold text-[#062B5C] shadow-md transition duration-300 hover:-translate-y-0.5 hover:bg-[#00C970] hover:shadow-lg">ðŸ’¬ Book My Demo</button>
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-center text-sm font-medium text-slate-500">
-                <span>✓ Adjusted on enrolment</span><span>✓ No spam</span><span>✓ You press Send</span>
+                <span>âœ“ Adjusted on enrolment</span><span>âœ“ No spam</span><span>âœ“ You press Send</span>
               </div>
             </form>
           </div>
@@ -141,3 +141,4 @@ Thank you.
     </section>
   );
 }
+
