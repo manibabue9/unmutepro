@@ -51,7 +51,11 @@ export const metadata: Metadata = {
       "Build confidence through practical spoken English, interview and workplace communication training.",
     images: ["/unmutepro-share.jpg"],
   },
-  icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/favicon.ico" },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+    apple: "/images/logo.png",
+  },
   robots: {
     index: true,
     follow: true,
