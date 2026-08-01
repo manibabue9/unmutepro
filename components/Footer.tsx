@@ -15,7 +15,7 @@ const programs = [
 ];
 
 const whatsappMessage = encodeURIComponent(
-  "Hello Unmute Pro, I would like to know more about the ₹99 demo booking."
+  "Hello Unmute Pro, I would like to book a demo and know the available timings."
 );
 
 export default function Footer() {
@@ -71,17 +71,18 @@ export default function Footer() {
               {programs.map((program) => <li key={program} className="text-blue-100">{program}</li>)}
             </ul>
             <div className="mt-7 rounded-2xl border border-[#00D97E]/30 bg-[#00D97E]/10 p-4">
-              <p className="font-bold text-[#00D97E]">₹99 Demo Booking</p>
+              <p className="font-bold text-[#00D97E]">Book a Demo</p>
               <p className="mt-2 text-sm leading-6 text-blue-100">Adjusted against the course fee when you enrol.</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 pt-8 text-center text-sm text-blue-200 sm:flex-row sm:text-left">
-          <p>© {currentYear} Unmute Pro. All rights reserved.</p>
+          <p>Â© {currentYear} Unmute Pro. All rights reserved.</p>
           <p>Confidence first. English follows naturally.</p>
         </div>
       </div>
     </footer>
   );
 }
+
