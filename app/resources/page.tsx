@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 };
 
 const resources = [
-  { title: "7-Day Confidence Challenge", description: "One practical speaking activity every day to reduce hesitation and build confidence.", slug: "7-day-confidence-challenge", icon: "⭐" },
-  { title: "50 Daily-Use English Sentences", description: "Useful sentences for daily conversations, work situations and confident communication.", slug: "50-daily-use-sentences", icon: "💬" },
-  { title: "Confident Self-Introduction Guide", description: "A clear Present-Past-Future structure for interviews and professional introductions.", slug: "self-introduction-guide", icon: "🗣️" },
-  { title: "25 HR Interview Questions Workbook", description: "Prepare clear answers for common HR questions using simple practice methods.", slug: "25-hr-interview-questions", icon: "🎯" },
-  { title: "Vocabulary Builder and Tracker", description: "Learn useful words through meaning, examples, repetition and weekly tracking.", slug: "vocabulary-builder-tracker", icon: "📘" },
+  { title: "7-Day Confidence Challenge", description: "One practical speaking activity every day to reduce hesitation and build confidence.", slug: "7-day-confidence-challenge", icon: "â­" },
+  { title: "50 Daily-Use English Sentences", description: "Useful sentences for daily conversations, work situations and confident communication.", slug: "50-daily-use-sentences", icon: "ðŸ’¬" },
+  { title: "Confident Self-Introduction Guide", description: "A clear Present-Past-Future structure for interviews and professional introductions.", slug: "self-introduction-guide", icon: "ðŸ—£ï¸" },
+  { title: "25 HR Interview Questions Workbook", description: "Prepare clear answers for common HR questions using simple practice methods.", slug: "25-hr-interview-questions", icon: "ðŸŽ¯" },
+  { title: "Vocabulary Builder and Tracker", description: "Learn useful words through meaning, examples, repetition and weekly tracking.", slug: "vocabulary-builder-tracker", icon: "ðŸ“˜" },
 ];
 
 export default function ResourcesPage() {
@@ -20,8 +20,8 @@ export default function ResourcesPage() {
     <main className="min-h-screen bg-[#F8FBFF]">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-          <Link href="/" className="font-extrabold text-[#062B5C]">← Unmute Pro</Link>
-          <Link href="/#contact" className="rounded-full bg-[#00D97E] px-5 py-2.5 text-sm font-bold text-[#062B5C]">Reserve Demo · ₹99</Link>
+          <Link href="/" className="font-extrabold text-[#062B5C]">â† Unmute Pro</Link>
+          <Link href="/#contact" className="rounded-full bg-[#00D97E] px-5 py-2.5 text-sm font-bold text-[#062B5C]">Book Demo</Link>
         </div>
       </header>
 
@@ -41,7 +41,7 @@ export default function ResourcesPage() {
               <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-[#00A866]">Free PDF</p>
               <h2 className="mt-3 text-2xl font-extrabold leading-tight text-[#062B5C]">{resource.title}</h2>
               <p className="mt-4 flex-1 leading-7 text-slate-600">{resource.description}</p>
-              <a href={`/resources/download/${resource.slug}`} className="mt-7 inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-5 py-3.5 font-bold text-[#062B5C] transition hover:-translate-y-0.5 hover:bg-[#00C970]">Download PDF <span className="ml-2">↓</span></a>
+              <a href={`/resources/download/${resource.slug}`} className="mt-7 inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-5 py-3.5 font-bold text-[#062B5C] transition hover:-translate-y-0.5 hover:bg-[#00C970]">Download PDF <span className="ml-2">â†“</span></a>
             </article>
           ))}
         </div>
@@ -49,9 +49,10 @@ export default function ResourcesPage() {
         <div className="mx-auto mt-12 max-w-4xl rounded-3xl bg-white p-8 text-center shadow-sm sm:p-10">
           <h2 className="text-3xl font-extrabold text-[#062B5C]">Use one resource at a time</h2>
           <p className="mx-auto mt-4 max-w-2xl leading-8 text-slate-600">Download a guide, practise aloud and track your improvement. Consistency matters more than completing everything at once.</p>
-          <Link href="/#contact" className="mt-6 inline-flex rounded-xl bg-[#062B5C] px-7 py-4 font-bold text-white">Get Mentor Guidance · ₹99 Demo</Link>
+          <Link href="/#contact" className="mt-6 inline-flex rounded-xl bg-[#062B5C] px-7 py-4 font-bold text-white">Book Demo</Link>
         </div>
       </section>
     </main>
   );
 }
+
