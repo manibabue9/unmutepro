@@ -3,7 +3,7 @@ import Image from "next/image";
 const trustPoints = [
   "Practical speaking sessions",
   "Personal mentor guidance",
-  "₹99 adjusted on enrolment",
+  "Personal mentor guidance",
 ];
 
 const highlights = [
@@ -40,8 +40,8 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
             <a href="#contact" className="inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-7 py-4 text-base font-bold text-[#062B5C] shadow-lg shadow-[#00D97E]/20 transition duration-300 hover:-translate-y-1 hover:bg-[#00C970] hover:shadow-xl">
-              Reserve Demo · ₹99
-              <span className="ml-2" aria-hidden="true">→</span>
+              Book Demo
+              <span className="ml-2" aria-hidden="true">â†’</span>
             </a>
             <a href="tel:+919392209162" className="inline-flex items-center justify-center rounded-xl border-2 border-[#062B5C] bg-white px-7 py-4 text-base font-bold text-[#062B5C] transition duration-300 hover:-translate-y-1 hover:bg-[#062B5C] hover:text-white">
               Talk to a Mentor
@@ -51,7 +51,7 @@ export default function Hero() {
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
             {trustPoints.map((point) => (
               <div key={point} className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#00D97E] text-xs font-bold text-[#062B5C]">✓</span>
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#00D97E] text-xs font-bold text-[#062B5C]">âœ“</span>
                 {point}
               </div>
             ))}
@@ -101,3 +101,4 @@ export default function Hero() {
     </section>
   );
 }
+
