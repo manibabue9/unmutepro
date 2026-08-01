@@ -23,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: "https://www.unmutepro.com/assessment",
+      lastModified: new Date("2026-08-02"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: "https://www.unmutepro.com/blog",
       lastModified: new Date("2026-08-01"),
       changeFrequency: "weekly",
@@ -36,3 +42,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 }
+
