@@ -45,7 +45,7 @@ export async function POST(request: Request) {
           <p><strong>Program:</strong> ${course}</p>
           <p><strong>Goal:</strong> ${message || "Guidance requested"}</p>
           <p>Our mentor will contact you to confirm the available time and payment instructions.</p>
-          <p>Unmute Pro â€” Your Silence Ends Here</p>
+          <p>Unmute Pro — Your Silence Ends Here</p>
         `,
       }),
     });
