@@ -5,9 +5,10 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { BookOpen, Check, ChevronLeft, ChevronRight, Download, Home, Library, MessageCircle, Play, UserRound } from "lucide-react";
 import { allLessons, programs, resources, type Lesson } from "@/lib/learning-data";
+import { createClient } from "@/lib/supabase/client";
 
 type Tab = "home" | "programs" | "resources" | "profile";
-type Learner = { name: string; goal: string };
+type Learner = { name: string; goal: string; email?: string; role?: "learner" | "mentor" | "admin" };
 type SyncMode = "local" | "cloud";
 const storageKeys = { learner: "unmutepro.learner", completed: "unmutepro.completed" };
 
@@ -24,13 +25,14 @@ export default function LearnerApp() {
       const savedLearner = localStorage.getItem(storageKeys.learner);
       const savedCompleted = localStorage.getItem(storageKeys.completed);
       if (savedLearner) setLearner(JSON.parse(savedLearner));
-      if (savedCompleted) setCompleted(JSON.parse(savedCompleted));
+      const localCompleted: string[] = savedCompleted ? JSON.parse(savedCompleted) : [];
+      if (localCompleted.length) setCompleted(localCompleted);
       try {
         const [meResponse, progressResponse] = await Promise.all([fetch("/api/me"), fetch("/api/progress")]);
         if (meResponse.ok) {
           const me = await meResponse.json();
           if (me.authenticated) {
-            const cloudLearner = { name: me.user.name, goal: me.user.goal };
+            const cloudLearner = { name: me.user.name, goal: me.user.goal, email: me.user.email, role: me.user.role };
             setLearner(cloudLearner);
             localStorage.setItem(storageKeys.learner, JSON.stringify(cloudLearner));
             setSyncMode("cloud");
@@ -39,8 +41,11 @@ export default function LearnerApp() {
         if (progressResponse.ok) {
           const progress = await progressResponse.json();
           if (progress.mode === "cloud") {
-            setCompleted(progress.completed);
-            localStorage.setItem(storageKeys.completed, JSON.stringify(progress.completed));
+            const merged = Array.from(new Set([...progress.completed, ...localCompleted]));
+            setCompleted(merged);
+            localStorage.setItem(storageKeys.completed, JSON.stringify(merged));
+            const pending = localCompleted.filter((id) => !progress.completed.includes(id));
+            await Promise.all(pending.map((lessonId) => fetch("/api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId, completed: true }) })));
             setSyncMode("cloud");
           }
         }
@@ -62,6 +67,22 @@ export default function LearnerApp() {
     return next;
   });
 
+  const saveProfile = async (value: Learner) => {
+    if (syncMode === "cloud") {
+      const response = await fetch("/api/me", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: value.name, goal: value.goal }) });
+      if (!response.ok) throw new Error("Could not save your profile");
+    }
+    localStorage.setItem(storageKeys.learner, JSON.stringify(value));
+    setLearner(value);
+  };
+
+  const signOut = async () => {
+    await createClient().auth.signOut();
+    localStorage.removeItem(storageKeys.learner);
+    localStorage.removeItem(storageKeys.completed);
+    window.location.href = "/login";
+  };
+
   if (!ready) return <div className="min-h-screen bg-[#F4F8FC]" />;
   if (!learner) return <Welcome onContinue={saveLearner} />;
 
@@ -80,7 +101,7 @@ export default function LearnerApp() {
           {tab === "home" && <Dashboard learner={learner} completed={completed} openLesson={openLesson} showPrograms={() => setTab("programs")} />}
           {tab === "programs" && <Catalogue completed={completed} openLesson={openLesson} />}
           {tab === "resources" && <Resources />}
-          {tab === "profile" && <Profile learner={learner} completed={completed} syncMode={syncMode} onReset={() => { localStorage.removeItem(storageKeys.learner); localStorage.removeItem(storageKeys.completed); setLearner(null); setCompleted([]); setSyncMode("local"); }} />}
+          {tab === "profile" && <Profile learner={learner} completed={completed} syncMode={syncMode} onSave={saveProfile} onSignOut={signOut} onReset={() => { localStorage.removeItem(storageKeys.learner); localStorage.removeItem(storageKeys.completed); setLearner(null); setCompleted([]); setSyncMode("local"); }} />}
         </>}
       </main>
       {!lesson && <BottomNav tab={tab} setTab={setTab} />}
@@ -123,6 +144,14 @@ function LessonDetail({ lesson, done, onBack, onToggle }: { lesson: Lesson & { p
 
 function Resources() { return <div><p className="text-sm font-bold uppercase tracking-wider text-[#00A866]">Resource library</p><h1 className="mt-2 text-3xl font-extrabold sm:text-5xl">Practical tools. Yours to keep.</h1><p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">Use these guides between mentor conversations to prepare, practise and reflect.</p><div className="mt-9 grid gap-5 md:grid-cols-3">{resources.map((resource) => <article key={resource.id} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#E7FFF5] text-[#00A866]"><Download size={22}/></span><p className="mt-5 text-xs font-bold uppercase tracking-wider text-[#00A866]">{resource.kind}</p><h2 className="mt-2 text-xl font-extrabold">{resource.title}</h2><p className="mt-3 flex-1 leading-7 text-slate-600">{resource.description}</p><a href={resource.href} className="mt-6 flex items-center gap-2 font-extrabold">Download <Download size={17}/></a></article>)}</div><div className="mt-8 rounded-3xl bg-[#062B5C] p-7 text-white sm:flex sm:items-center sm:justify-between sm:p-9"><div><h2 className="text-2xl font-extrabold">Need help choosing what to practise?</h2><p className="mt-2 text-blue-100">A mentor can recommend the right program for your admission, interview or workplace goal.</p></div><a href="mailto:unmuteproofficial@gmail.com" className="mt-5 inline-flex rounded-xl bg-[#00D97E] px-5 py-3 font-extrabold text-[#062B5C] sm:mt-0">Contact us</a></div></div>; }
 
-function Profile({ learner, completed, syncMode, onReset }: { learner: Learner; completed: string[]; syncMode: SyncMode; onReset: () => void }) { return <div className="mx-auto max-w-2xl"><h1 className="text-3xl font-extrabold sm:text-5xl">Your profile</h1><div className="mt-8 rounded-3xl bg-white p-7 shadow-sm sm:p-9"><div className="flex items-center gap-4"><span className="grid h-16 w-16 place-items-center rounded-full bg-[#062B5C] text-2xl font-extrabold text-white">{learner.name.charAt(0).toUpperCase()}</span><div><h2 className="text-2xl font-extrabold">{learner.name}</h2><p className="text-slate-500">Unmute Pro learner · {syncMode === "cloud" ? "Cloud sync on" : "Local demo"}</p></div></div><div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#E7FFF5] p-5"><p className="text-3xl font-extrabold text-[#00A866]">{completed.length}</p><p className="mt-1 text-sm text-slate-600">lessons completed</p></div><div className="rounded-2xl bg-slate-100 p-5"><p className="text-3xl font-extrabold">{programs.length}</p><p className="mt-1 text-sm text-slate-600">learning paths</p></div></div><div className="mt-7 border-t border-slate-100 pt-6"><p className="text-sm font-bold text-slate-500">YOUR PRIMARY GOAL</p><p className="mt-2 font-bold">{learner.goal}</p></div></div>{syncMode === "local" && <div className="mt-5 rounded-3xl border border-slate-200 bg-white p-7"><h2 className="text-xl font-extrabold">Local demo account</h2><p className="mt-2 leading-7 text-slate-600">Your name and progress stay on this device. Sign in for cross-device sync.</p><div className="mt-5 flex gap-5"><Link href="/login" className="font-bold text-[#00A866]">Secure sign in</Link><button onClick={onReset} className="font-bold text-red-600">Reset local account</button></div></div>}</div>; }
+function Profile({ learner, completed, syncMode, onSave, onSignOut, onReset }: { learner: Learner; completed: string[]; syncMode: SyncMode; onSave: (value: Learner) => Promise<void>; onSignOut: () => Promise<void>; onReset: () => void }) {
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState(learner.name);
+  const [goal, setGoal] = useState(learner.goal);
+  const [status, setStatus] = useState("");
+  const submit = async (event: FormEvent) => { event.preventDefault(); setStatus("Saving…"); try { await onSave({ ...learner, name: name.trim(), goal }); setStatus("Profile saved."); setEditing(false); } catch { setStatus("Could not save. Please try again."); } };
+  return <div className="mx-auto max-w-2xl"><h1 className="text-3xl font-extrabold sm:text-5xl">Your profile</h1><div className="mt-8 rounded-3xl bg-white p-7 shadow-sm sm:p-9"><div className="flex items-center gap-4"><span className="grid h-16 w-16 place-items-center rounded-full bg-[#062B5C] text-2xl font-extrabold text-white">{learner.name.charAt(0).toUpperCase()}</span><div className="min-w-0"><h2 className="truncate text-2xl font-extrabold">{learner.name}</h2><p className="truncate text-slate-500">{learner.email || "Unmute Pro learner"} · {syncMode === "cloud" ? "Cloud sync on" : "Local demo"}</p></div></div><div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#E7FFF5] p-5"><p className="text-3xl font-extrabold text-[#00A866]">{completed.length}</p><p className="mt-1 text-sm text-slate-600">lessons completed</p></div><div className="rounded-2xl bg-slate-100 p-5"><p className="text-3xl font-extrabold">{programs.length}</p><p className="mt-1 text-sm text-slate-600">learning paths</p></div></div>{editing ? <form onSubmit={submit} className="mt-7 border-t border-slate-100 pt-6"><label className="block text-sm font-bold">Your name<input value={name} onChange={(event) => setName(event.target.value)} required minLength={2} className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" /></label><label className="mt-4 block text-sm font-bold">Primary goal<select value={goal} onChange={(event) => setGoal(event.target.value)} className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>Speak English with confidence</option><option>Prepare for job interviews</option><option>Prepare for admissions interviews</option><option>Communicate better at work</option></select></label><div className="mt-5 flex gap-3"><button className="rounded-xl bg-[#00D97E] px-5 py-3 font-bold">Save profile</button><button type="button" onClick={() => setEditing(false)} className="px-3 font-bold text-slate-500">Cancel</button></div></form> : <div className="mt-7 border-t border-slate-100 pt-6"><p className="text-sm font-bold text-slate-500">YOUR PRIMARY GOAL</p><p className="mt-2 font-bold">{learner.goal}</p><button onClick={() => setEditing(true)} className="mt-4 font-bold text-[#00A866]">Edit profile</button></div>}{status && <p role="status" className="mt-4 text-sm text-slate-500">{status}</p>}</div>{syncMode === "cloud" ? <div className="mt-5 flex flex-wrap items-center gap-5 rounded-3xl border border-slate-200 bg-white p-7">{learner.role === "admin" && <Link href="/admin" className="font-bold text-[#00A866]">Open admin console</Link>}<button onClick={() => void onSignOut()} className="font-bold text-red-600">Sign out</button></div> : <div className="mt-5 rounded-3xl border border-slate-200 bg-white p-7"><h2 className="text-xl font-extrabold">Local demo account</h2><p className="mt-2 leading-7 text-slate-600">Your name and progress stay on this device. Create an account to sync progress across devices.</p><div className="mt-5 flex gap-5"><Link href="/login" className="font-bold text-[#00A866]">Create account</Link><button onClick={onReset} className="font-bold text-red-600">Reset local account</button></div></div>}</div>;
+}
 
 function BottomNav({ tab, setTab }: { tab: Tab; setTab: (tab: Tab) => void }) { const items = [{ id: "home" as Tab, label: "Home", Icon: Home }, { id: "programs" as Tab, label: "Programs", Icon: BookOpen }, { id: "resources" as Tab, label: "Resources", Icon: Library }, { id: "profile" as Tab, label: "Profile", Icon: UserRound }]; return <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-3 pb-[max(.7rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:sticky lg:bottom-auto lg:mx-auto lg:mb-8 lg:mt-4 lg:w-fit lg:rounded-full lg:border lg:px-2 lg:py-2 lg:shadow-lg" aria-label="Learner navigation"><div className="mx-auto flex max-w-lg justify-around gap-1 lg:max-w-none">{items.map(({ id, label, Icon }) => <button key={id} onClick={() => setTab(id)} className={`flex min-w-16 flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs font-bold lg:min-w-0 lg:flex-row lg:gap-2 lg:rounded-full lg:px-4 ${tab === id ? "bg-[#E7FFF5] text-[#007F4D]" : "text-slate-500"}`}><Icon size={20}/><span>{label}</span></button>)}</div></nav>; }
+
