@@ -11,12 +11,12 @@ const stats = [
 ];
 
 const benefits = [
-  { icon: "🗣️", title: "Speak from Day One", text: "Every session includes guided speaking practice." },
-  { icon: "🎯", title: "Goal-Based Learning", text: "Activities are connected to your personal or career goals." },
-  { icon: "🤝", title: "Mentor Feedback", text: "Receive practical corrections without fear or embarrassment." },
-  { icon: "💼", title: "Corporate Experience", text: "Learn communication shaped by 15+ years of real workplace experience." },
-  { icon: "🧠", title: "Confidence First", text: "We work on hesitation, mindset and expression—not grammar alone." },
-  { icon: "📱", title: "Flexible Support", text: "Continue practice and communication support through WhatsApp." },
+  { icon: "ðŸ—£ï¸", title: "Speak from Day One", text: "Every session includes guided speaking practice." },
+  { icon: "ðŸŽ¯", title: "Goal-Based Learning", text: "Activities are connected to your personal or career goals." },
+  { icon: "ðŸ¤", title: "Mentor Feedback", text: "Receive practical corrections without fear or embarrassment." },
+  { icon: "ðŸ’¼", title: "Corporate Experience", text: "Learn communication shaped by 15+ years of real workplace experience." },
+  { icon: "ðŸ§ ", title: "Confidence First", text: "We work on hesitation, mindset and expressionâ€”not grammar alone." },
+  { icon: "ðŸ“±", title: "Flexible Support", text: "Continue practice and communication support through WhatsApp." },
 ];
 
 const transformations = [
@@ -92,11 +92,11 @@ export default function PremiumSections() {
               <div key={before} className="grid overflow-hidden rounded-3xl border border-slate-200 md:grid-cols-2">
                 <div className="bg-slate-50 p-7">
                   <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Before</p>
-                  <p className="mt-3 text-lg font-semibold text-slate-700">“{before}”</p>
+                  <p className="mt-3 text-lg font-semibold text-slate-700">â€œ{before}â€</p>
                 </div>
                 <div className="bg-[#ECFDF5] p-7">
                   <p className="text-xs font-bold uppercase tracking-wider text-[#007F4D]">After guided practice</p>
-                  <p className="mt-3 text-lg font-bold text-[#062B5C]">“{after}”</p>
+                  <p className="mt-3 text-lg font-bold text-[#062B5C]">â€œ{after}â€</p>
                 </div>
               </div>
             ))}
@@ -117,7 +117,7 @@ export default function PremiumSections() {
           <div className="relative aspect-video overflow-hidden rounded-3xl bg-[#062B5C] shadow-2xl">
             <Image src="/images/manibabu.jpg" alt="Manibabu introducing Unmute Pro" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover opacity-70" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white">
-              <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[#00D97E] text-3xl text-[#062B5C] shadow-xl" aria-hidden="true">▶</span>
+              <span className="flex h-20 w-20 items-center justify-center rounded-full bg-[#00D97E] text-3xl text-[#062B5C] shadow-xl" aria-hidden="true">â–¶</span>
               <p className="mt-5 text-lg font-bold">Introduction video coming soon</p>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function PremiumSections() {
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {["Confidence breakthrough", "Interview success", "Workplace communication"].map((title) => (
               <article key={title} className="rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 p-8">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl shadow-sm">✦</div>
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl shadow-sm">âœ¦</div>
                 <h3 className="mt-5 text-xl font-bold text-[#062B5C]">{title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-500">Verified learner story coming soon.</p>
               </article>
@@ -143,7 +143,7 @@ export default function PremiumSections() {
 
       <section className="bg-[#F8FBFF] px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
-          <div className="text-3xl tracking-wider text-amber-400" aria-label="Google reviews placeholder">★★★★★</div>
+          <div className="text-3xl tracking-wider text-amber-400" aria-label="Google reviews placeholder">â˜…â˜…â˜…â˜…â˜…</div>
           <h2 className="mt-4 text-3xl font-extrabold text-[#062B5C]">Google Reviews</h2>
           <p className="mx-auto mt-4 max-w-2xl leading-8 text-slate-600">Verified Google ratings and review excerpts will appear here after the Unmute Pro Business Profile begins receiving learner feedback.</p>
           <p className="mt-5 text-sm font-semibold text-slate-500">No rating is displayed yet because we do not publish unverified review data.</p>
@@ -153,13 +153,14 @@ export default function PremiumSections() {
       <section className="bg-[#062B5C] px-5 py-14 text-white sm:px-8 lg:px-12">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-8 text-center lg:flex-row lg:text-left">
           <div>
-            <span className="inline-flex rounded-full bg-[#00D97E] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#062B5C]">Admissions Open · Limited Seats</span>
-            <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl">Reserve your ₹99 demo session</h2>
-            <p className="mt-3 text-blue-100">The ₹99 booking amount is adjusted against your course fee when you enrol.</p>
+            <span className="inline-flex rounded-full bg-[#00D97E] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#062B5C]">Admissions Open Â· Limited Seats</span>
+            <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl">Book your demo session</h2>
+            <p className="mt-3 text-blue-100">Speak with a mentor and choose the right learning path for your goals.</p>
           </div>
-          <a href="#contact" className="shrink-0 rounded-xl bg-[#00D97E] px-8 py-4 font-extrabold text-[#062B5C] shadow-lg transition hover:-translate-y-1 hover:bg-[#00C970]">Reserve My Demo · ₹99</a>
+          <a href="#contact" className="shrink-0 rounded-xl bg-[#00D97E] px-8 py-4 font-extrabold text-[#062B5C] shadow-lg transition hover:-translate-y-1 hover:bg-[#00C970]">Book Demo</a>
         </div>
       </section>
     </>
   );
 }
+
