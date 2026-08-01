@@ -16,7 +16,7 @@ const posts = [
     category: "Interview Preparation",
     readingTime: "8 min read",
     published: "August 1, 2026",
-    icon: "ðŸŽ¯",
+    icon: "🎯",
   },
   {
     title: "Top 25 HR Interview Questions with Simple Answers",
@@ -25,7 +25,7 @@ const posts = [
     category: "Interview Preparation",
     readingTime: "10 min read",
     published: "August 1, 2026",
-    icon: "ðŸ’¼",
+    icon: "💼",
   },
   {
     title: "7 Daily Habits That Improve Your English Communication",
@@ -34,7 +34,7 @@ const posts = [
     category: "Spoken English",
     readingTime: "7 min read",
     published: "August 1, 2026",
-    icon: "ðŸ“…",
+    icon: "📅",
   },
   {
     title: "How to Speak English Confidently Even If You Are a Beginner",
@@ -43,7 +43,7 @@ const posts = [
     category: "Spoken English",
     readingTime: "7 min read",
     published: "August 1, 2026",
-    icon: "ðŸ—£ï¸",
+    icon: "🗣️",
   },
   {
     title: "Why Confidence Matters More Than Grammar in Spoken English",
@@ -53,7 +53,7 @@ const posts = [
     category: "Confidence",
     readingTime: "6 min read",
     published: "August 1, 2026",
-    icon: "ðŸ’¬",
+    icon: "💬",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function BlogPage() {
     <main className="min-h-screen bg-[#F8FBFF]">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-          <Link href="/" className="font-extrabold text-[#062B5C]">â† Unmute Pro</Link>
+          <Link href="/" className="font-extrabold text-[#062B5C]">← Unmute Pro</Link>
           <Link href="/#contact" className="rounded-full bg-[#00D97E] px-5 py-2.5 text-sm font-bold text-[#062B5C]">Book Demo</Link>
         </div>
       </header>
@@ -86,10 +86,10 @@ export default function BlogPage() {
                 </div>
               </div>
               <div className="p-7 sm:p-8">
-                <div className="flex flex-wrap gap-3 text-sm font-semibold text-slate-500"><span>{post.published}</span><span>â€¢</span><span>{post.readingTime}</span></div>
+                <div className="flex flex-wrap gap-3 text-sm font-semibold text-slate-500"><span>{post.published}</span><span>•</span><span>{post.readingTime}</span></div>
                 <h2 className="mt-4 text-2xl font-extrabold leading-tight text-[#062B5C]">{post.title}</h2>
                 <p className="mt-4 leading-8 text-slate-600">{post.description}</p>
-                <Link href={post.href} className="mt-7 inline-flex items-center font-bold text-[#00A866] hover:text-[#007F4D]">Read article <span className="ml-2">â†’</span></Link>
+                <Link href={post.href} className="mt-7 inline-flex items-center font-bold text-[#00A866] hover:text-[#007F4D]">Read article <span className="ml-2">→</span></Link>
               </div>
             </article>
           ))}
