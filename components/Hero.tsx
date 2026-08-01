@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const trustPoints = [
   "Practical speaking sessions",
@@ -43,9 +44,7 @@ export default function Hero() {
               Book Demo
               <span className="ml-2" aria-hidden="true">â†’</span>
             </a>
-            <a href="tel:+919392209162" className="inline-flex items-center justify-center rounded-xl border-2 border-[#062B5C] bg-white px-7 py-4 text-base font-bold text-[#062B5C] transition duration-300 hover:-translate-y-1 hover:bg-[#062B5C] hover:text-white">
-              Talk to a Mentor
-            </a>
+            <Link href="/assessment" className="inline-flex items-center justify-center rounded-xl border-2 border-[#062B5C] bg-white px-7 py-4 text-base font-bold text-[#062B5C] transition duration-300 hover:-translate-y-1 hover:bg-[#062B5C] hover:text-white">Check My English Level</Link>
           </div>
 
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
