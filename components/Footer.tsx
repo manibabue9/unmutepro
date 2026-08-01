@@ -78,7 +78,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 pt-8 text-center text-sm text-blue-200 sm:flex-row sm:text-left">
-          <p>Â© {currentYear} Unmute Pro. All rights reserved.</p>
+          <p>© {currentYear} Unmute Pro. All rights reserved.</p>
           <p>Confidence first. English follows naturally.</p>
         </div>
       </div>
