@@ -2,7 +2,7 @@ const courses = [
   {
     title: "Confidence English Program",
     level: "Most Popular",
-    icon: "⭐",
+    icon: "â­",
     description: "Overcome hesitation and speak English confidently in everyday and professional situations.",
     features: ["Confidence building", "Fluency improvement", "Real-life speaking practice"],
     featured: true,
@@ -10,7 +10,7 @@ const courses = [
   {
     title: "Interview Mastery",
     level: "Job Seekers",
-    icon: "🎯",
+    icon: "ðŸŽ¯",
     description: "Prepare for interviews through guided practice, mock sessions and personal feedback.",
     features: ["Self-introduction practice", "Common interview questions", "Body language and confidence"],
     featured: false,
@@ -18,7 +18,7 @@ const courses = [
   {
     title: "Personal Mentoring",
     level: "One-to-One",
-    icon: "🤝",
+    icon: "ðŸ¤",
     description: "Get individual guidance based on your current level and communication goals.",
     features: ["Personal learning plan", "Flexible speaking practice", "Individual feedback"],
     featured: false,
@@ -52,13 +52,13 @@ export default function Courses() {
               <ul className="space-y-3">
                 {course.features.map((feature) => (
                   <li key={feature} className={`flex items-start gap-3 ${course.featured ? "text-blue-100" : "text-slate-700"}`}>
-                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#00D97E] text-xs font-bold text-[#062B5C]">✓</span>
+                    <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#00D97E] text-xs font-bold text-[#062B5C]">âœ“</span>
                     {feature}
                   </li>
                 ))}
               </ul>
               <a href="#contact" className={`mt-8 inline-flex w-full items-center justify-center rounded-xl px-6 py-3.5 font-bold transition duration-300 hover:-translate-y-1 ${course.featured ? "bg-[#00D97E] text-[#062B5C] hover:bg-[#00C970]" : "bg-[#062B5C] text-white hover:bg-[#0A4B8C]"}`}>
-                Reserve Demo · ₹99 <span className="ml-2" aria-hidden="true">→</span>
+                Book Demo <span className="ml-2" aria-hidden="true">â†’</span>
               </a>
             </article>
           ))}
@@ -67,9 +67,10 @@ export default function Courses() {
         <div className="mx-auto mt-12 max-w-3xl rounded-3xl bg-[#F8FBFF] px-7 py-8 text-center sm:px-10">
           <h3 className="text-2xl font-bold text-[#062B5C]">Not sure which program suits you?</h3>
           <p className="mt-3 leading-7 text-slate-600">Speak with our mentor and get a simple recommendation based on your goals and current confidence level.</p>
-          <a href="#contact" className="mt-6 inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-7 py-3.5 font-bold text-[#062B5C] shadow-md transition hover:-translate-y-1 hover:bg-[#00C970]">Talk to Our Mentor <span className="ml-2" aria-hidden="true">→</span></a>
+          <a href="#contact" className="mt-6 inline-flex items-center justify-center rounded-xl bg-[#00D97E] px-7 py-3.5 font-bold text-[#062B5C] shadow-md transition hover:-translate-y-1 hover:bg-[#00C970]">Talk to Our Mentor <span className="ml-2" aria-hidden="true">â†’</span></a>
         </div>
       </div>
     </section>
   );
 }
+
