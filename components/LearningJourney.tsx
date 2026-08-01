@@ -75,10 +75,11 @@ export default function LearningJourney() {
 
         <div className="mt-10 text-center">
           <a href="#contact" className="inline-flex rounded-xl bg-[#00D97E] px-8 py-4 font-bold text-[#062B5C] shadow-lg transition hover:-translate-y-1 hover:bg-[#00C970]">
-            Start My Journey · ₹99 Demo
+            Book Demo
           </a>
         </div>
       </div>
     </section>
   );
 }
+
