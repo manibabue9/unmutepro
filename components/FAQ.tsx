@@ -9,7 +9,7 @@ const faqs = [
   ["Who can join the programs?", "Students, job seekers, working professionals, homemakers and anyone who wants stronger communication confidence can join."],
   ["Do you provide interview preparation?", "Yes. We cover self-introductions, common questions, mock interviews, body language and personal feedback."],
   ["Are classes available online?", "Contact us for the latest online and offline availability, schedules and upcoming batches."],
-  ["How do I choose the right program?", "Reserve a ₹99 demo or speak with our mentor. We will understand your level and recommend the right path."],
+  ["How do I choose the right program?", "Book a demo and speak with our mentor. We will understand your level and recommend the right path."],
   ["Will I become fluent immediately?", "Fluency grows through consistent practice, participation and guided correction. We provide the structure and support."],
   ["How can I know fees and timings?", "Current fees and timings are shared personally based on the selected program and available schedule."],
 ];
@@ -62,3 +62,4 @@ export default function FAQ() {
     </section>
   );
 }
+
