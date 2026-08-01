@@ -96,7 +96,7 @@ export default function About() {
                 href="#contact"
                 className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-lg"
               >
-                Reserve Demo · ₹99
+                Book Demo
               </Link>
             </div>
           </div>
@@ -105,3 +105,4 @@ export default function About() {
     </section>
   );
 }
+
