@@ -3,7 +3,7 @@ export type AssessmentQuestion = { id: string; prompt: string; options: string[]
 export const assessmentQuestions: AssessmentQuestion[] = [
   { id: "q1", prompt: "I ___ a student.", options: ["am", "is", "are", "be"], answer: 0 },
   { id: "q2", prompt: "She ___ coffee every morning.", options: ["drink", "drinks", "drinking", "drank"], answer: 1 },
-  { id: "q3", prompt: "Choose the opposite of â€˜difficultâ€™.", options: ["heavy", "easy", "slow", "strong"], answer: 1 },
+  { id: "q3", prompt: "Choose the opposite of ‘difficult’.", options: ["heavy", "easy", "slow", "strong"], answer: 1 },
   { id: "q4", prompt: "We ___ to the market yesterday.", options: ["go", "gone", "went", "going"], answer: 2 },
   { id: "q5", prompt: "There aren't ___ chairs in this room.", options: ["some", "much", "any", "a"], answer: 2 },
   { id: "q6", prompt: "Which sentence is correct?", options: ["He can to swim.", "He cans swim.", "He can swim.", "He can swimming."], answer: 2 },
@@ -14,13 +14,13 @@ export const assessmentQuestions: AssessmentQuestion[] = [
   { id: "q11", prompt: "The meeting ___ by the manager tomorrow.", options: ["leads", "will lead", "will be led", "is leading"], answer: 2 },
   { id: "q12", prompt: "I'd rather ___ at home tonight.", options: ["staying", "to stay", "stay", "stayed"], answer: 2 },
   { id: "q13", prompt: "Despite ___ tired, she finished the presentation.", options: ["be", "being", "was", "to be"], answer: 1 },
-  { id: "q14", prompt: "Choose the closest meaning of â€˜reliableâ€™.", options: ["dependable", "expensive", "creative", "uncertain"], answer: 0 },
+  { id: "q14", prompt: "Choose the closest meaning of ‘reliable’.", options: ["dependable", "expensive", "creative", "uncertain"], answer: 0 },
   { id: "q15", prompt: "By the time I arrived, the interview ___ .", options: ["starts", "has started", "had started", "was start"], answer: 2 },
   { id: "q16", prompt: "If I ___ more time, I would learn another language.", options: ["have", "had", "will have", "would have"], answer: 1 },
   { id: "q17", prompt: "The proposal was rejected because it was not financially ___.", options: ["visible", "viable", "variable", "vitality"], answer: 1 },
   { id: "q18", prompt: "Hardly ___ the speech when the microphone stopped working.", options: ["she began", "had she begun", "she had begun", "did she began"], answer: 1 },
   { id: "q19", prompt: "Which is most appropriate in a formal email?", options: ["Send me the details now.", "Kindly send the details at your earliest convenience.", "Hey, give me details.", "I want details."], answer: 1 },
-  { id: "q20", prompt: "â€˜The results were inconclusiveâ€™ means the results ___ .", options: ["proved the idea", "were completely wrong", "did not provide a clear answer", "arrived late"], answer: 2 },
+  { id: "q20", prompt: "‘The results were inconclusive’ means the results ___ .", options: ["proved the idea", "were completely wrong", "did not provide a clear answer", "arrived late"], answer: 2 },
 ];
 
 export function getAssessmentResult(score: number) {
