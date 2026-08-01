@@ -30,7 +30,7 @@ export default function BlogArticle({
     <main className="min-h-screen bg-[#F8FBFF]">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
-          <Link href="/blog" className="font-extrabold text-[#062B5C]">â† All Blogs</Link>
+          <Link href="/blog" className="font-extrabold text-[#062B5C]">← All Blogs</Link>
           <Link href="/#contact" className="rounded-full bg-[#00D97E] px-5 py-2.5 text-sm font-bold text-[#062B5C]">Book Demo</Link>
         </div>
       </header>
@@ -42,7 +42,7 @@ export default function BlogArticle({
             <h1 className="mt-5 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">{title}</h1>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-blue-100">{description}</p>
             <div className="mt-7 flex flex-wrap justify-center gap-3 text-sm font-semibold text-blue-100">
-              <span>By Manibabu</span><span>â€¢</span><span>{published}</span><span>â€¢</span><span>{readingTime}</span>
+              <span>By Manibabu</span><span>•</span><span>{published}</span><span>•</span><span>{readingTime}</span>
             </div>
           </div>
         </section>
@@ -64,7 +64,7 @@ export default function BlogArticle({
                   {section.bullets && (
                     <ul className="mt-5 space-y-3">
                       {section.bullets.map((item) => (
-                        <li key={item} className="flex gap-3 leading-7 text-slate-700"><span className="font-bold text-[#00A866]">âœ“</span>{item}</li>
+                        <li key={item} className="flex gap-3 leading-7 text-slate-700"><span className="font-bold text-[#00A866]">✓</span>{item}</li>
                       ))}
                     </ul>
                   )}
