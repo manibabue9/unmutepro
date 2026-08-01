@@ -109,7 +109,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
         {children}
-        {/* Public website lead assistant */}
+        {/* Public website lead assistant and sales follow-up */}
         <LeadChatbot />
         <Analytics />
         {gaMeasurementId && (
