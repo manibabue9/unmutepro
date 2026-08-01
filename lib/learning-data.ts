@@ -80,3 +80,4 @@ export const resources: Resource[] = [
 export const allLessons = programs.flatMap((program) =>
   program.lessons.map((lesson) => ({ ...lesson, programId: program.id, programTitle: program.title }))
 );
+
