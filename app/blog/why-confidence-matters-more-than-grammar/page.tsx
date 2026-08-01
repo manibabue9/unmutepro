@@ -58,7 +58,7 @@ const habits = [
 
 export default function BlogPostPage() {
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(
-    `Why Confidence Matters More Than Grammar in Spoken English â€” ${pageUrl}`
+    `Why Confidence Matters More Than Grammar in Spoken English — ${pageUrl}`
   )}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     pageUrl
@@ -76,7 +76,7 @@ export default function BlogPostPage() {
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
           <Link href="/blog" className="font-extrabold text-[#062B5C]">
-            â† Back to Blog
+            ← Back to Blog
           </Link>
           <Link
             href="/#contact"
@@ -102,9 +102,9 @@ export default function BlogPostPage() {
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3 text-sm font-semibold text-blue-100">
               <span>By Manibabu</span>
-              <span>â€¢</span>
+              <span>•</span>
               <time dateTime="2026-08-01">August 1, 2026</time>
-              <span>â€¢</span>
+              <span>•</span>
               <span>6 min read</span>
             </div>
           </div>
