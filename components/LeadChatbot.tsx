@@ -6,6 +6,7 @@ import { MessageCircle, Send, X } from "lucide-react";
 
 const goals = ["Speak English confidently", "Prepare for interviews", "Workplace communication", "Admissions preparation", "Find my English level"];
 
+// Public lead assistant shown across the marketing website.
 export default function LeadChatbot() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
