@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { assessmentQuestions, getAssessmentResult } from "@/lib/assessment-data";
 import { createClient } from "@/lib/supabase/server";
+import { sendWhatsAppAlert } from "@/lib/twilio";
 
 type Body = { name?: string; email?: string; mobile?: string; goal?: string; website?: string; answers?: Record<string, number> };
 const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char] ?? char);
@@ -23,7 +24,10 @@ export async function POST(request: Request) {
 
     const resendKey = process.env.RESEND_API_KEY;
     const fromEmail = process.env.BOOKING_FROM_EMAIL;
-    if (resendKey && fromEmail) await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: fromEmail, to: ["unmuteproofficial@gmail.com"], reply_to: email, subject: `New English Level Check: ${name} — ${result.level}`, html: `<h2>New English Level Check result</h2><p><strong>Learner:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Mobile:</strong> ${escapeHtml(mobile)}</p><p><strong>Goal:</strong> ${escapeHtml(goal)}</p><p><strong>Score:</strong> ${score}/${assessmentQuestions.length}</p><p><strong>Estimated level:</strong> ${result.level}</p><p><strong>Recommended programme:</strong> ${result.program}</p>` }) }).catch(() => null);
+    const whatsappAlert = `New Unmute Pro level check\nName: ${name}\nMobile: +${mobile}\nEmail: ${email}\nGoal: ${goal}\nScore: ${score}/${assessmentQuestions.length}\nEstimated level: ${result.level}\nRecommended: ${result.program}\nFollow up: https://wa.me/${mobile}`;
+    const notifications: Promise<unknown>[] = [sendWhatsAppAlert(whatsappAlert)];
+    if (resendKey && fromEmail) notifications.push(fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: fromEmail, to: ["unmuteproofficial@gmail.com"], reply_to: email, subject: `New English Level Check: ${name} — ${result.level}`, html: `<h2>New English Level Check result</h2><p><strong>Learner:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Mobile:</strong> ${escapeHtml(mobile)}</p><p><strong>Goal:</strong> ${escapeHtml(goal)}</p><p><strong>Score:</strong> ${score}/${assessmentQuestions.length}</p><p><strong>Estimated level:</strong> ${result.level}</p><p><strong>Recommended programme:</strong> ${result.program}</p>` }) }));
+    await Promise.allSettled(notifications);
     return NextResponse.json({ ok: true, result: { ...result, score, total: assessmentQuestions.length } });
   } catch { return NextResponse.json({ error: "Unable to process your assessment." }, { status: 500 }); }
 }
