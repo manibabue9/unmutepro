@@ -37,15 +37,15 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         from: fromEmail,
         to: [email, "unmuteproofficial@gmail.com"],
-        subject: "Unmute Pro ₹99 Demo Booking Request",
+        subject: "Unmute Pro Demo Booking Request",
         html: `
           <h2>Thank you, ${name}</h2>
-          <p>We received your request for an Unmute Pro ₹99 demo session.</p>
+          <p>We received your request for an Unmute Pro demo session.</p>
           <p><strong>Mobile:</strong> +91 ${mobile}</p>
           <p><strong>Program:</strong> ${course}</p>
           <p><strong>Goal:</strong> ${message || "Guidance requested"}</p>
           <p>Our mentor will contact you to confirm the available time and payment instructions.</p>
-          <p>Unmute Pro — Your Silence Ends Here</p>
+          <p>Unmute Pro â€” Your Silence Ends Here</p>
         `,
       }),
     });
@@ -59,3 +59,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Unable to process booking" }, { status: 500 });
   }
 }
+
