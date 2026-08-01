@@ -58,7 +58,7 @@ const habits = [
 
 export default function BlogPostPage() {
   const whatsappShare = `https://wa.me/?text=${encodeURIComponent(
-    `Why Confidence Matters More Than Grammar in Spoken English — ${pageUrl}`
+    `Why Confidence Matters More Than Grammar in Spoken English â€” ${pageUrl}`
   )}`;
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     pageUrl
@@ -76,13 +76,13 @@ export default function BlogPostPage() {
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
           <Link href="/blog" className="font-extrabold text-[#062B5C]">
-            ← Back to Blog
+            â† Back to Blog
           </Link>
           <Link
             href="/#contact"
             className="rounded-full bg-[#00D97E] px-5 py-2.5 text-sm font-bold text-[#062B5C]"
           >
-            Reserve Demo · ₹99
+            Book Demo
           </Link>
         </div>
       </header>
@@ -102,9 +102,9 @@ export default function BlogPostPage() {
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3 text-sm font-semibold text-blue-100">
               <span>By Manibabu</span>
-              <span>•</span>
+              <span>â€¢</span>
               <time dateTime="2026-08-01">August 1, 2026</time>
-              <span>•</span>
+              <span>â€¢</span>
               <span>6 min read</span>
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function BlogPostPage() {
                 Ready to start?
               </p>
               <h2 className="mt-3 text-3xl font-extrabold text-white">
-                Reserve your ₹99 demo session
+                Book your demo session
               </h2>
               <p className="mt-4 leading-8 text-blue-100">
                 Experience practical, confidence-focused learning and receive a
@@ -202,7 +202,7 @@ export default function BlogPostPage() {
                 href="/#contact"
                 className="mt-6 inline-flex rounded-xl bg-[#00D97E] px-7 py-4 font-extrabold text-[#062B5C] no-underline"
               >
-                Reserve My Demo · ₹99
+                Book Demo
               </Link>
             </div>
           </div>
@@ -243,3 +243,4 @@ export default function BlogPostPage() {
     </main>
   );
 }
+
