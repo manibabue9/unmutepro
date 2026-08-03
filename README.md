@@ -1,6 +1,6 @@
 # Unmute Pro
 
-Official website for **Unmute Pro** – A Spoken English and Communication Skills Institute.
+Official website for **Unmute Pro** â€“ A Spoken English and Communication Skills Institute.
 
 ## Features
 
@@ -45,6 +45,24 @@ update public.profiles set role = 'admin' where id = '<auth-user-uuid>';
 ```
 
 The app automatically uses cloud identity and synchronized progress when configured. Without those variables it remains in local demo mode. Staff can open `/admin` after their role is set to `mentor` or `admin`.
+
+## Google Reviews setup
+
+The homepage includes a Google Reviews section. Without Google credentials it
+shows a safe link to the public UnmutePro Google Maps profile. To show the live
+rating and review cards:
+
+1. Create or select a Google Cloud project and enable **Places API (New)**.
+2. Create an API key and restrict it to **Places API (New)**. Keep this key
+   server-only; never prefix it with `NEXT_PUBLIC_`.
+3. Add `GOOGLE_PLACES_API_KEY` to `.env.local` and to the Vercel Production
+   environment.
+4. Optionally add `GOOGLE_PLACES_PLACE_ID` to avoid a text-search request. If it
+   is omitted, the server locates the UnmutePro listing by its business name and
+   Hyderabad address.
+5. Redeploy the site after changing Vercel environment variables.
+
+The integration requests the latest Google content without storing review text.
 
 ## Author
 
