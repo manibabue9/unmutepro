@@ -9,6 +9,7 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import InstitutionEnquiry from "@/components/InstitutionEnquiry";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <LearningJourney />
       <LearnerOutcomes />
       <FAQ />
+      <InstitutionEnquiry />
       <Contact />
       <Footer />
       <WhatsAppButton />
