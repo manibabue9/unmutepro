@@ -4,6 +4,7 @@ const quickLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Programs", href: "#courses" },
+  { name: "Google Reviews", href: "#reviews" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ];
@@ -73,7 +74,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 pt-8 text-center text-sm text-blue-200 sm:flex-row sm:text-left">
-          <p>© {currentYear} Unmute Pro. All rights reserved.</p>
+          <p>Â© {currentYear} Unmute Pro. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-4"><a href="/privacy" className="hover:text-[#00D97E]">Privacy Policy</a><a href="/account-deletion" className="hover:text-[#00D97E]">Delete Account</a></div>
           <p>Confidence first. English follows naturally.</p>
         </div>
@@ -81,4 +82,3 @@ export default function Footer() {
     </footer>
   );
 }
-

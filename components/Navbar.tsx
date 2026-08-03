@@ -10,6 +10,7 @@ const navigationLinks = [
   { name: "Colleges", href: "/institutions", section: false },
   { name: "Level Check", href: "/assessment", section: false },
   { name: "Resources", href: "/resources", section: false },
+  { name: "Reviews", href: "#reviews", section: true },
   { name: "About", href: "#about", section: true },
 ];
 
@@ -159,4 +160,3 @@ export default function Navbar() {
     </header>
   );
 }
-
