@@ -6,15 +6,11 @@ import { useEffect, useRef, useState } from "react";
 
 const navigationLinks = [
   { name: "Home", href: "#home", section: true },
-  { name: "About", href: "#about", section: true },
-  { name: "Why Us", href: "#why-us", section: true },
-  { name: "Courses", href: "#courses", section: true },
+  { name: "Students", href: "#courses", section: true },
+  { name: "Colleges", href: "/institutions", section: false },
   { name: "Level Check", href: "/assessment", section: false },
-  { name: "Institutions", href: "#institutions", section: true },
   { name: "Resources", href: "/resources", section: false },
-  { name: "Blog", href: "/blog", section: false },
-  { name: "FAQ", href: "#faq", section: true },
-  { name: "Contact", href: "#contact", section: true },
+  { name: "About", href: "#about", section: true },
 ];
 
 export default function Navbar() {
