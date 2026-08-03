@@ -10,6 +10,7 @@ const navigationLinks = [
   { name: "Why Us", href: "#why-us", section: true },
   { name: "Courses", href: "#courses", section: true },
   { name: "Level Check", href: "/assessment", section: false },
+  { name: "Institutions", href: "#institutions", section: true },
   { name: "Resources", href: "/resources", section: false },
   { name: "Blog", href: "/blog", section: false },
   { name: "FAQ", href: "#faq", section: true },
