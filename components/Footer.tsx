@@ -48,12 +48,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="mt-7 flex flex-wrap gap-3 text-sm">
-              <a href="#" aria-label="Unmute Pro on Facebook" className="rounded-full border border-white/15 px-4 py-2 text-blue-100 transition hover:border-[#00D97E] hover:text-[#00D97E]">Facebook</a>
-              <a href="#" aria-label="Unmute Pro on Instagram" className="rounded-full border border-white/15 px-4 py-2 text-blue-100 transition hover:border-[#00D97E] hover:text-[#00D97E]">Instagram</a>
-              <a href="#" aria-label="Unmute Pro on YouTube" className="rounded-full border border-white/15 px-4 py-2 text-blue-100 transition hover:border-[#00D97E] hover:text-[#00D97E]">YouTube</a>
-            </div>
-            <p className="mt-3 text-xs text-blue-300">Add the final social-profile URLs before publishing these links.</p>
+            <p className="mt-7 text-sm font-semibold text-blue-100">For learner guidance and institutional presentations, contact us directly by WhatsApp or phone.</p>
           </div>
 
           <div>
@@ -79,7 +74,8 @@ export default function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-3 pt-8 text-center text-sm text-blue-200 sm:flex-row sm:text-left">
           <p>© {currentYear} Unmute Pro. All rights reserved.</p>
-          <div className="flex flex-wrap justify-center gap-4"><a href="/privacy" className="hover:text-[#00D97E]">Privacy Policy</a><a href="/account-deletion" className="hover:text-[#00D97E]">Delete Account</a></div>\n          <p>Confidence first. English follows naturally.</p>
+          <div className="flex flex-wrap justify-center gap-4"><a href="/privacy" className="hover:text-[#00D97E]">Privacy Policy</a><a href="/account-deletion" className="hover:text-[#00D97E]">Delete Account</a></div>
+          <p>Confidence first. English follows naturally.</p>
         </div>
       </div>
     </footer>
