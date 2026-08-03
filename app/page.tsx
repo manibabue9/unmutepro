@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import AudiencePathways from "@/components/AudiencePathways";
 import PremiumSections from "@/components/PremiumSections";
 import About from "@/components/About";
 import Courses from "@/components/Courses";
@@ -16,6 +17,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <AudiencePathways />
       <PremiumSections />
       <About />
       <Courses />
@@ -29,3 +31,4 @@ export default function Home() {
     </main>
   );
 }
+
