@@ -1,0 +1,17 @@
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { sendWhatsAppAlert } from "@/lib/twilio";
+
+type Body = { institutionName?:string; contactName?:string; designation?:string; email?:string; mobile?:string; city?:string; participantCount?:string; preferredDate?:string; topic?:string; format?:string; message?:string; website?:string };
+const clean = (value?: string) => value?.trim() ?? "";
+const escapeHtml = (value:string) => value.replace(/[&<>'"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c]??c);
+
+export async function POST(request:Request) {
+  try { const body=await request.json() as Body; if(body.website) return NextResponse.json({ok:true});
+    const data={ institution_name:clean(body.institutionName), contact_name:clean(body.contactName), designation:clean(body.designation), email:clean(body.email).toLowerCase(), mobile:clean(body.mobile).replace(/\D/g,""), city:clean(body.city), participant_count:Number(body.participantCount), preferred_date:clean(body.preferredDate)||null, topic:clean(body.topic), format:clean(body.format), message:clean(body.message) };
+    if(data.institution_name.length<2||data.contact_name.length<2||!/^\S+@\S+\.\S+$/.test(data.email)||data.mobile.length<10||!data.city||!Number.isFinite(data.participant_count)||data.participant_count<1||!data.topic||!data.format) return NextResponse.json({error:"Please check the required institutional details."},{status:400});
+    const supabase=await createClient(); const {error}=await supabase.from("institution_enquiries").insert(data); if(error) return NextResponse.json({error:"We could not save the enquiry. Please try again."},{status:500});
+    const alert=`New Unmute Pro institution enquiry\nInstitution: ${data.institution_name}\nContact: ${data.contact_name}, ${data.designation}\nMobile: +${data.mobile}\nEmail: ${data.email}\nCity: ${data.city}\nParticipants: ${data.participant_count}\nTopic: ${data.topic}\nFormat: ${data.format}\nPreferred date: ${data.preferred_date||"Flexible"}\nFollow up: https://wa.me/${data.mobile}`;
+    const notifications:Promise<unknown>[]=[sendWhatsAppAlert(alert)]; const key=process.env.RESEND_API_KEY,from=process.env.BOOKING_FROM_EMAIL; if(key&&from) notifications.push(fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${key}`,"Content-Type":"application/json"},body:JSON.stringify({from,to:["unmuteproofficial@gmail.com"],reply_to:data.email,subject:`Institution enquiry: ${data.institution_name}`,html:`<h2>Institutional presentation enquiry</h2><p><strong>Institution:</strong> ${escapeHtml(data.institution_name)}</p><p><strong>Contact:</strong> ${escapeHtml(data.contact_name)} (${escapeHtml(data.designation)})</p><p><strong>Mobile:</strong> +${escapeHtml(data.mobile)}</p><p><strong>Email:</strong> ${escapeHtml(data.email)}</p><p><strong>City:</strong> ${escapeHtml(data.city)}</p><p><strong>Participants:</strong> ${data.participant_count}</p><p><strong>Topic:</strong> ${escapeHtml(data.topic)}</p><p><strong>Format:</strong> ${escapeHtml(data.format)}</p><p><strong>Preferred date:</strong> ${escapeHtml(data.preferred_date||"Flexible")}</p><p><strong>Requirements:</strong> ${escapeHtml(data.message||"Not provided")}</p>`})})); await Promise.allSettled(notifications); return NextResponse.json({ok:true});
+  } catch { return NextResponse.json({error:"Unable to process the institutional enquiry."},{status:500}); }
+}
