@@ -19,7 +19,7 @@ export default function About() {
 
             <div className="relative overflow-hidden rounded-[28px] bg-slate-100 shadow-xl">
               <Image
-                src="/images/manibabu.jpg"
+                src="/images/mentor-portrait-2026.png"
                 alt="Manibabu, Communication Mentor at Unmute Pro"
                 width={500}
                 height={600}
@@ -105,4 +105,3 @@ export default function About() {
     </section>
   );
 }
-
