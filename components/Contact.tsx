@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { trackConversion } from "@/lib/analytics";
 
 const phoneNumber = "919392209162";
 
@@ -51,6 +52,7 @@ Thank you.
     `.trim();
 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+    trackConversion("demo_request_submitted", { programme: course, has_goal: Boolean(message.trim()) });
     const newWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     if (!newWindow) window.location.href = whatsappUrl;
   };

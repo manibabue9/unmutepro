@@ -7,11 +7,11 @@ import About from "@/components/About";
 import Courses from "@/components/Courses";
 import LearningJourney from "@/components/LearningJourney";
 import LearnerOutcomes from "@/components/LearnerOutcomes";
+import EvidenceStories from "@/components/EvidenceStories";
 import GoogleReviews from "@/components/GoogleReviews";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import InstitutionEnquiry from "@/components/InstitutionEnquiry";
 
 export const dynamic = "force-dynamic";
@@ -28,13 +28,12 @@ export default function Home() {
       <Courses />
       <LearningJourney />
       <LearnerOutcomes />
+      <EvidenceStories />
       <GoogleReviews />
       <FAQ />
       <InstitutionEnquiry />
       <Contact />
       <Footer />
-      <WhatsAppButton />
     </main>
   );
 }
-

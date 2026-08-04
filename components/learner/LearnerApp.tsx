@@ -3,19 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-import { BookOpen, Building2, Check, ChevronLeft, ChevronRight, Download, Home, Library, MessageCircle, Play, UserRound } from "lucide-react";
+import { BookOpen, Building2, Check, ChevronLeft, ChevronRight, Download, Home, Library, MessageCircle, Mic2, Play, UserRound } from "lucide-react";
 import { allLessons, programs, resources, type Lesson } from "@/lib/learning-data";
 import { createClient } from "@/lib/supabase/client";
+import PracticeHub, { type PracticeEntry } from "@/components/learner/PracticeHub";
+import { trackConversion } from "@/lib/analytics";
 
-type Tab = "home" | "programs" | "resources" | "profile";
+type Tab = "home" | "programs" | "practice" | "resources" | "profile";
 type Learner = { name: string; goal: string; email?: string; role?: "learner" | "mentor" | "admin" };
 type SyncMode = "local" | "cloud";
-const storageKeys = { learner: "unmutepro.learner", completed: "unmutepro.completed" };
+const storageKeys = { learner: "unmutepro.learner", completed: "unmutepro.completed", practice: "unmutepro.practice-log" };
 
 export default function LearnerApp() {
   const [ready, setReady] = useState(false);
   const [learner, setLearner] = useState<Learner | null>(null);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [practiceEntries, setPracticeEntries] = useState<PracticeEntry[]>([]);
   const [tab, setTab] = useState<Tab>("home");
   const [lesson, setLesson] = useState<(Lesson & { programId: string; programTitle: string }) | null>(null);
   const [syncMode, setSyncMode] = useState<SyncMode>("local");
@@ -24,9 +27,11 @@ export default function LearnerApp() {
     async function hydrate() {
       const savedLearner = localStorage.getItem(storageKeys.learner);
       const savedCompleted = localStorage.getItem(storageKeys.completed);
+      const savedPractice = localStorage.getItem(storageKeys.practice);
       if (savedLearner) setLearner(JSON.parse(savedLearner));
       const localCompleted: string[] = savedCompleted ? JSON.parse(savedCompleted) : [];
       if (localCompleted.length) setCompleted(localCompleted);
+      if (savedPractice) setPracticeEntries(JSON.parse(savedPractice));
       try {
         const [meResponse, progressResponse] = await Promise.all([fetch("/api/me"), fetch("/api/progress")]);
         if (meResponse.ok) {
@@ -64,6 +69,12 @@ export default function LearnerApp() {
     const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id];
     localStorage.setItem(storageKeys.completed, JSON.stringify(next));
     if (syncMode === "cloud") void fetch("/api/progress", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId: id, completed: isCompleting }) });
+    trackConversion(isCompleting ? "lesson_completed" : "lesson_marked_incomplete", { lesson_id: id, sync_mode: syncMode });
+    return next;
+  });
+  const savePractice = (entry: PracticeEntry) => setPracticeEntries((current) => {
+    const next = [entry, ...current];
+    localStorage.setItem(storageKeys.practice, JSON.stringify(next));
     return next;
   });
 
@@ -80,6 +91,7 @@ export default function LearnerApp() {
     await createClient().auth.signOut();
     localStorage.removeItem(storageKeys.learner);
     localStorage.removeItem(storageKeys.completed);
+    localStorage.removeItem(storageKeys.practice);
     window.location.href = "/login";
   };
 
@@ -100,8 +112,9 @@ export default function LearnerApp() {
         {lesson ? <LessonDetail lesson={lesson} done={completed.includes(lesson.id)} onBack={() => setLesson(null)} onToggle={() => toggleComplete(lesson.id)} /> : <>
           {tab === "home" && <Dashboard learner={learner} completed={completed} openLesson={openLesson} showPrograms={() => setTab("programs")} />}
           {tab === "programs" && <Catalogue completed={completed} openLesson={openLesson} />}
+          {tab === "practice" && <PracticeHub entries={practiceEntries} completedCount={completed.length} onSave={savePractice} />}
           {tab === "resources" && <Resources />}
-          {tab === "profile" && <Profile learner={learner} completed={completed} syncMode={syncMode} onSave={saveProfile} onSignOut={signOut} onReset={() => { localStorage.removeItem(storageKeys.learner); localStorage.removeItem(storageKeys.completed); setLearner(null); setCompleted([]); setSyncMode("local"); }} />}
+          {tab === "profile" && <Profile learner={learner} completed={completed} syncMode={syncMode} onSave={saveProfile} onSignOut={signOut} onReset={() => { localStorage.removeItem(storageKeys.learner); localStorage.removeItem(storageKeys.completed); localStorage.removeItem(storageKeys.practice); setLearner(null); setCompleted([]); setPracticeEntries([]); setSyncMode("local"); }} />}
         </>}
       </main>
       {!lesson && <BottomNav tab={tab} setTab={setTab} />}
@@ -154,5 +167,4 @@ function Profile({ learner, completed, syncMode, onSave, onSignOut, onReset }: {
   return <div className="mx-auto max-w-2xl"><h1 className="text-3xl font-extrabold sm:text-5xl">Your profile</h1><div className="mt-8 rounded-3xl bg-white p-7 shadow-sm sm:p-9"><div className="flex items-center gap-4"><span className="grid h-16 w-16 place-items-center rounded-full bg-[#062B5C] text-2xl font-extrabold text-white">{learner.name.charAt(0).toUpperCase()}</span><div className="min-w-0"><h2 className="truncate text-2xl font-extrabold">{learner.name}</h2><p className="truncate text-slate-500">{learner.email || "Unmute Pro learner"} · {syncMode === "cloud" ? "Cloud sync on" : "Local demo"}</p></div></div><div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#E7FFF5] p-5"><p className="text-3xl font-extrabold text-[#00A866]">{completed.length}</p><p className="mt-1 text-sm text-slate-600">lessons completed</p></div><div className="rounded-2xl bg-slate-100 p-5"><p className="text-3xl font-extrabold">{programs.length}</p><p className="mt-1 text-sm text-slate-600">learning paths</p></div></div>{editing ? <form onSubmit={submit} className="mt-7 border-t border-slate-100 pt-6"><label className="block text-sm font-bold">Your name<input value={name} onChange={(event) => setName(event.target.value)} required minLength={2} className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" /></label><label className="mt-4 block text-sm font-bold">Primary goal<select value={goal} onChange={(event) => setGoal(event.target.value)} className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>Speak English with confidence</option><option>Prepare for job interviews</option><option>Prepare for admissions interviews</option><option>Communicate better at work</option></select></label><div className="mt-5 flex gap-3"><button className="rounded-xl bg-[#00D97E] px-5 py-3 font-bold">Save profile</button><button type="button" onClick={() => setEditing(false)} className="px-3 font-bold text-slate-500">Cancel</button></div></form> : <div className="mt-7 border-t border-slate-100 pt-6"><p className="text-sm font-bold text-slate-500">YOUR PRIMARY GOAL</p><p className="mt-2 font-bold">{learner.goal}</p><button onClick={() => setEditing(true)} className="mt-4 font-bold text-[#00A866]">Edit profile</button></div>}{status && <p role="status" className="mt-4 text-sm text-slate-500">{status}</p>}</div>{syncMode === "cloud" ? <div className="mt-5 flex flex-wrap items-center gap-5 rounded-3xl border border-slate-200 bg-white p-7">{learner.role === "admin" && <Link href="/admin" className="font-bold text-[#00A866]">Open admin console</Link>}<button onClick={() => void onSignOut()} className="font-bold text-red-600">Sign out</button></div> : <div className="mt-5 rounded-3xl border border-slate-200 bg-white p-7"><h2 className="text-xl font-extrabold">Local demo account</h2><p className="mt-2 leading-7 text-slate-600">Your name and progress stay on this device. Create an account to sync progress across devices.</p><div className="mt-5 flex gap-5"><Link href="/login" className="font-bold text-[#00A866]">Create account</Link><button onClick={onReset} className="font-bold text-red-600">Reset local account</button></div></div>}</div>;
 }
 
-function BottomNav({ tab, setTab }: { tab: Tab; setTab: (tab: Tab) => void }) { const items = [{ id: "home" as Tab, label: "Home", Icon: Home }, { id: "programs" as Tab, label: "Programs", Icon: BookOpen }, { id: "resources" as Tab, label: "Resources", Icon: Library }, { id: "profile" as Tab, label: "Profile", Icon: UserRound }]; return <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-3 pb-[max(.7rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:sticky lg:bottom-auto lg:mx-auto lg:mb-8 lg:mt-4 lg:w-fit lg:rounded-full lg:border lg:px-2 lg:py-2 lg:shadow-lg" aria-label="Learner navigation"><div className="mx-auto flex max-w-lg justify-around gap-1 lg:max-w-none">{items.map(({ id, label, Icon }) => <button key={id} onClick={() => setTab(id)} className={`flex min-w-16 flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs font-bold lg:min-w-0 lg:flex-row lg:gap-2 lg:rounded-full lg:px-4 ${tab === id ? "bg-[#E7FFF5] text-[#007F4D]" : "text-slate-500"}`}><Icon size={20}/><span>{label}</span></button>)}</div></nav>; }
-
+function BottomNav({ tab, setTab }: { tab: Tab; setTab: (tab: Tab) => void }) { const items = [{ id: "home" as Tab, label: "Home", Icon: Home }, { id: "programs" as Tab, label: "Programs", Icon: BookOpen }, { id: "practice" as Tab, label: "Practice", Icon: Mic2 }, { id: "resources" as Tab, label: "Resources", Icon: Library }, { id: "profile" as Tab, label: "Profile", Icon: UserRound }]; return <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-2 pb-[max(.7rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:sticky lg:bottom-auto lg:mx-auto lg:mb-8 lg:mt-4 lg:w-fit lg:rounded-full lg:border lg:px-2 lg:py-2 lg:shadow-lg" aria-label="Learner navigation"><div className="mx-auto flex max-w-lg justify-around gap-0.5 lg:max-w-none">{items.map(({ id, label, Icon }) => <button key={id} onClick={() => setTab(id)} className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-1 py-2 text-[11px] font-bold lg:min-w-0 lg:flex-none lg:flex-row lg:gap-2 lg:rounded-full lg:px-4 lg:text-xs ${tab === id ? "bg-[#E7FFF5] text-[#007F4D]" : "text-slate-500"}`}><Icon size={19}/><span>{label}</span></button>)}</div></nav>; }
