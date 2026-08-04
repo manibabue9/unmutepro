@@ -72,11 +72,11 @@ export default function SalesVideo() {
             </span>
 
             <h2 className="mt-6 max-w-2xl text-3xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Two paths to confident communicationâ€”in 45 seconds.
+              Two paths to confident communication—in 45 seconds.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-8 text-blue-100 sm:text-lg">
               Meet the 7-week journey for individual learners and the 15-day
-              communication bootcamp for collegesâ€”both built around practical
+              communication bootcamp for colleges—both built around practical
               speaking, mentor feedback and career readiness.
             </p>
 
@@ -202,4 +202,3 @@ export default function SalesVideo() {
     </>
   );
 }
-
