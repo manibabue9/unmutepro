@@ -7,7 +7,7 @@ const phoneNumber = "919392209162";
 export default function Contact() {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
-  const [course, setCourse] = useState("Confidence English Program");
+  const [course, setCourse] = useState("7-Week Individual Confidence Programme");
   const [message, setMessage] = useState("");
   const [formError, setFormError] = useState("");
 
@@ -118,9 +118,9 @@ Thank you.
               <div>
                 <label htmlFor="course" className="mb-2 block font-semibold text-[#062B5C]">Select Program</label>
                 <select id="course" name="course" value={course} onChange={(event) => setCourse(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-4 text-slate-800 outline-none transition focus:border-[#00D97E] focus:ring-4 focus:ring-[#00D97E]/15">
-                  <option>Confidence English Program</option>
-                  <option>Interview Mastery</option>
-                  <option>Personal Mentoring</option>
+                  <option>7-Week Individual Confidence Programme</option>
+                  <option>Interview and Placement Focus</option>
+                  <option>Presentation and Workplace Focus</option>
                   <option>Not Sure — Need Guidance</option>
                 </select>
               </div>
@@ -141,4 +141,3 @@ Thank you.
     </section>
   );
 }
-

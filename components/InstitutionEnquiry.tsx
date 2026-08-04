@@ -3,28 +3,127 @@
 import { FormEvent, useState } from "react";
 import { Building2, CheckCircle2, Presentation, Send, Users } from "lucide-react";
 
-const topics = ["English communication and confidence", "Interview and placement preparation", "Presentation and public speaking", "Career readiness and corporate expectations", "Admissions and group discussion skills", "Custom programme"];
+const topics = [
+  "15-Day Campus Communication Bootcamp",
+  "Interview and placement preparation",
+  "Presentation and public speaking",
+  "Career readiness and corporate expectations",
+  "Admissions and group discussion skills",
+  "Custom programme",
+];
+
+const initialForm = {
+  institutionName: "",
+  contactName: "",
+  designation: "",
+  email: "",
+  mobile: "",
+  city: "",
+  participantCount: "",
+  preferredDate: "",
+  topic: topics[0],
+  format: "On campus",
+  message: "",
+  website: "",
+};
 
 export default function InstitutionEnquiry() {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ institutionName: "", contactName: "", designation: "", email: "", mobile: "", city: "", participantCount: "", preferredDate: "", topic: topics[0], format: "On campus", message: "", website: "" });
+  const [form, setForm] = useState(initialForm);
 
   const submit = async (event: FormEvent) => {
-    event.preventDefault(); setBusy(true); setError("");
-    try { const response = await fetch("/api/institution-enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); const data = await response.json(); if (!response.ok) throw new Error(data.error); setSent(true); }
-    catch (e) { setError(e instanceof Error ? e.message : "Please try again."); }
-    finally { setBusy(false); }
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/institution-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      setSent(true);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : "Please try again.");
+    } finally {
+      setBusy(false);
+    }
   };
 
-  return <section id="institutions" className="scroll-mt-32 bg-[#062B5C] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
-    <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
-      <div><span className="inline-flex rounded-full bg-[#00D97E] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#062B5C]">For Colleges and Institutions</span><h2 className="mt-5 text-3xl font-extrabold sm:text-5xl">Invite Unmute Pro to your institution</h2><p className="mt-5 text-lg leading-8 text-blue-100">Organise a practical, confidence-focused communication, interview or career-readiness presentation for your students.</p><div className="mt-8 space-y-4">{[[Presentation,"Interactive presentations and workshops"],[Users,"Programmes for students and placement batches"],[Building2,"Corporate experience with practical mentor guidance"]].map(([Icon,text])=>{const C=Icon as typeof Presentation;return <div key={text as string} className="flex items-center gap-3"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10"><C className="text-[#00D97E]"/></span><p className="font-semibold">{text as string}</p></div>})}</div></div>
-      <div className="rounded-[2rem] bg-white p-6 text-[#062B5C] shadow-2xl sm:p-8">{sent ? <div className="py-10 text-center"><CheckCircle2 className="mx-auto text-[#00A866]" size={52}/><h3 className="mt-5 text-2xl font-extrabold">Thank you for inviting Unmute Pro</h3><p className="mt-3 leading-7 text-slate-600">Your institutional enquiry has been received. We will contact you to understand your students&apos; needs and discuss the presentation.</p><a href="https://wa.me/919392209162?text=Hello%20Unmute%20Pro%2C%20I%20submitted%20an%20institutional%20enquiry." className="mt-6 inline-flex rounded-xl bg-[#00D97E] px-5 py-3 font-extrabold">Continue on WhatsApp</a></div> : <form onSubmit={submit}><h3 className="text-2xl font-extrabold">Request a presentation</h3><p className="mt-2 text-sm text-slate-500">Tell us about your institution and preferred programme.</p><div className="mt-6 grid gap-4 sm:grid-cols-2"><Field label="Institution or college name" value={form.institutionName} onChange={v=>setForm({...form,institutionName:v})}/><Field label="Contact person" value={form.contactName} onChange={v=>setForm({...form,contactName:v})}/><Field label="Designation" value={form.designation} onChange={v=>setForm({...form,designation:v})}/><Field label="Official email" type="email" value={form.email} onChange={v=>setForm({...form,email:v})}/><Field label="Mobile / WhatsApp" type="tel" value={form.mobile} onChange={v=>setForm({...form,mobile:v})}/><Field label="City" value={form.city} onChange={v=>setForm({...form,city:v})}/><Field label="Expected participants" type="number" value={form.participantCount} onChange={v=>setForm({...form,participantCount:v})}/><Field label="Preferred date (optional)" type="date" required={false} value={form.preferredDate} onChange={v=>setForm({...form,preferredDate:v})}/><Select label="Presentation topic" value={form.topic} options={topics} onChange={v=>setForm({...form,topic:v})}/><Select label="Preferred format" value={form.format} options={["On campus","Online","Open to discussion"]} onChange={v=>setForm({...form,format:v})}/></div><label className="mt-4 block text-sm font-bold">Additional requirements<textarea value={form.message} onChange={e=>setForm({...form,message:e.target.value})} rows={3} className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-3 font-normal"/></label><input className="hidden" value={form.website} onChange={e=>setForm({...form,website:e.target.value})} tabIndex={-1}/>{error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}<button disabled={busy} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#00D97E] px-5 py-4 font-extrabold disabled:opacity-50">{busy?"Sending...":"Request institutional presentation"}<Send size={18}/></button><p className="mt-3 text-center text-xs text-slate-500">We use these details only to respond to your institutional enquiry.</p></form>}</div>
-    </div>
-  </section>;
+  return (
+    <section id="institutions" className="scroll-mt-32 bg-[#062B5C] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+        <div>
+          <span className="inline-flex rounded-full bg-[#00D97E] px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#062B5C]">For Colleges and Institutions</span>
+          <h2 className="mt-5 text-3xl font-extrabold sm:text-5xl">Bring the 15-day bootcamp to your campus</h2>
+          <p className="mt-5 text-lg leading-8 text-blue-100">Tell us about your students, timetable and placement goals. We will shape a practical proposal for your college.</p>
+          <div className="mt-8 space-y-4">
+            {[
+              [Presentation, "Fifteen training days with flexible scheduling"],
+              [Users, "Cohort practice for presentations, GDs and interviews"],
+              [Building2, "Pre/post insight with practical mentor guidance"],
+            ].map(([Icon, text]) => {
+              const FeatureIcon = Icon as typeof Presentation;
+              return (
+                <div key={text as string} className="flex items-center gap-3">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10"><FeatureIcon className="text-[#00D97E]" /></span>
+                  <p className="font-semibold">{text as string}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] bg-white p-6 text-[#062B5C] shadow-2xl sm:p-8">
+          {sent ? (
+            <div className="py-10 text-center">
+              <CheckCircle2 className="mx-auto text-[#00A866]" size={52} />
+              <h3 className="mt-5 text-2xl font-extrabold">Thank you for contacting Unmute Pro</h3>
+              <p className="mt-3 leading-7 text-slate-600">Your institutional enquiry has been received. We will contact you to understand the cohort and discuss the 15-day bootcamp plan.</p>
+              <a href="https://wa.me/919392209162?text=Hello%20Unmute%20Pro%2C%20I%20submitted%20an%20institutional%20enquiry%20for%20the%2015-day%20bootcamp." className="mt-6 inline-flex rounded-xl bg-[#00D97E] px-5 py-3 font-extrabold">Continue on WhatsApp</a>
+            </div>
+          ) : (
+            <form onSubmit={submit}>
+              <h3 className="text-2xl font-extrabold">Request a campus proposal</h3>
+              <p className="mt-2 text-sm text-slate-500">Tell us about your institution, learners and preferred format.</p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <Field label="Institution or college name" value={form.institutionName} onChange={(value) => setForm({ ...form, institutionName: value })} />
+                <Field label="Contact person" value={form.contactName} onChange={(value) => setForm({ ...form, contactName: value })} />
+                <Field label="Designation" value={form.designation} onChange={(value) => setForm({ ...form, designation: value })} />
+                <Field label="Official email" type="email" value={form.email} onChange={(value) => setForm({ ...form, email: value })} />
+                <Field label="Mobile / WhatsApp" type="tel" value={form.mobile} onChange={(value) => setForm({ ...form, mobile: value })} />
+                <Field label="City" value={form.city} onChange={(value) => setForm({ ...form, city: value })} />
+                <Field label="Expected participants" type="number" value={form.participantCount} onChange={(value) => setForm({ ...form, participantCount: value })} />
+                <Field label="Preferred start date (optional)" type="date" required={false} value={form.preferredDate} onChange={(value) => setForm({ ...form, preferredDate: value })} />
+                <Select label="Programme" value={form.topic} options={topics} onChange={(value) => setForm({ ...form, topic: value })} />
+                <Select label="Preferred format" value={form.format} options={["On campus", "Online", "Open to discussion"]} onChange={(value) => setForm({ ...form, format: value })} />
+              </div>
+              <label className="mt-4 block text-sm font-bold">
+                Timetable or additional requirements
+                <textarea value={form.message} onChange={(event) => setForm({ ...form, message: event.target.value })} rows={3} className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-3 font-normal" />
+              </label>
+              <input className="hidden" value={form.website} onChange={(event) => setForm({ ...form, website: event.target.value })} tabIndex={-1} autoComplete="off" />
+              {error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+              <button disabled={busy} className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#00D97E] px-5 py-4 font-extrabold disabled:opacity-50">
+                {busy ? "Sending..." : "Request the 15-day bootcamp proposal"}<Send size={18} />
+              </button>
+              <p className="mt-3 text-center text-xs text-slate-500">We use these details only to respond to your institutional enquiry.</p>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function Field({label,value,onChange,type="text",required=true}:{label:string;value:string;onChange:(v:string)=>void;type?:string;required?:boolean}) { return <label className="text-sm font-bold">{label}<input required={required} type={type} value={value} onChange={e=>onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-3 font-normal"/></label>; }
-function Select({label,value,options,onChange}:{label:string;value:string;options:string[];onChange:(v:string)=>void}) { return <label className="text-sm font-bold">{label}<select value={value} onChange={e=>onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal">{options.map(option=><option key={option}>{option}</option>)}</select></label>; }
+function Field({ label, value, onChange, type = "text", required = true }: { label: string; value: string; onChange: (value: string) => void; type?: string; required?: boolean }) {
+  return <label className="text-sm font-bold">{label}<input required={required} type={type} value={value} onChange={(event) => onChange(event.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-3 font-normal" /></label>;
+}
+
+function Select({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
+  return <label className="text-sm font-bold">{label}<select value={value} onChange={(event) => onChange(event.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal">{options.map((option) => <option key={option}>{option}</option>)}</select></label>;
+}
