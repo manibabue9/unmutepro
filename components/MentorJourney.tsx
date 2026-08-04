@@ -95,11 +95,11 @@ export default function MentorJourney() {
             <div className="relative overflow-hidden rounded-[2rem] border-8 border-white bg-slate-100 shadow-2xl">
               <div className="relative aspect-[4/5]">
                 <Image
-                  src="/images/mentor.jpg"
+                  src="/images/mentor-portrait-2026.png"
                   alt="Manibabu, mentor and communication guide at Unmute Pro"
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center"
+                  className="object-cover object-top"
                 />
               </div>
 

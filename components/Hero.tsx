@@ -22,10 +22,9 @@ export default function Hero() {
       </div>
       <div className="relative mx-auto w-full max-w-[480px] pb-10">
         <div className="absolute -right-4 top-10 z-20 rounded-2xl bg-[#00D97E] px-5 py-4 text-[#062B5C] shadow-xl"><p className="text-3xl font-extrabold">15+</p><p className="text-xs font-bold uppercase tracking-wider">Years corporate experience</p></div>
-        <div className="overflow-hidden rounded-[2rem] border-[10px] border-white bg-[#062B5C] shadow-2xl"><div className="relative aspect-[4/5]"><Image src="/images/manibabu.jpg" alt="Manibabu, Unmute Pro communication mentor" fill priority sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover object-center"/><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#031A38] via-[#031A38]/88 to-transparent px-7 pb-8 pt-28 text-white"><p className="text-3xl font-extrabold">Manibabu</p><p className="mt-1 font-bold text-[#00D97E]">Communication Mentor</p><p className="mt-3 max-w-sm text-sm leading-6 text-blue-100">Mentor-guided practice shaped by real corporate conversations—not grammar drills alone.</p></div></div></div>
+        <div className="overflow-hidden rounded-[2rem] border-[10px] border-white bg-[#062B5C] shadow-2xl"><div className="relative aspect-[4/5]"><Image src="/images/mentor-portrait-2026.png" alt="Manibabu, Unmute Pro communication mentor" fill priority sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover object-top"/><div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#031A38] via-[#031A38]/88 to-transparent px-7 pb-8 pt-28 text-white"><p className="text-3xl font-extrabold">Manibabu</p><p className="mt-1 font-bold text-[#00D97E]">Communication Mentor</p><p className="mt-3 max-w-sm text-sm leading-6 text-blue-100">Mentor-guided practice shaped by real corporate conversations—not grammar drills alone.</p></div></div></div>
         <div className="absolute -bottom-1 -left-4 z-20 max-w-[270px] rounded-2xl border border-slate-200 bg-white p-5 shadow-xl"><p className="text-xs font-extrabold uppercase tracking-wider text-[#00A866]">The Unmute Pro difference</p><p className="mt-2 font-bold leading-6 text-[#062B5C]">Practise the exact conversations that shape campus and career opportunities.</p></div>
       </div>
     </div>
   </section>;
 }
-
