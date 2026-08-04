@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 
-const videoSource = "/videos/unmute-pro-45-second-sales-video-2026.mp4";
+const videoSource = "/videos/unmute-pro-sales-video-with-voice-2026.mp4";
 
 const videoHighlights = [
   "7-week individual confidence journey",
@@ -72,7 +72,7 @@ export default function SalesVideo() {
             </span>
 
             <h2 className="mt-6 max-w-2xl text-3xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Two paths to confident communication—in 45 seconds.
+              Two paths to confident communication—in under a minute.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-8 text-blue-100 sm:text-lg">
               Meet the 7-week journey for individual learners and the 15-day
@@ -105,7 +105,7 @@ export default function SalesVideo() {
               <span className="grid h-9 w-9 place-items-center rounded-full bg-[#062B5C] text-white">
                 <Play className="ml-0.5 h-4 w-4 fill-current" aria-hidden="true" />
               </span>
-              Watch the 45-second story
+              Watch the 48-second story
             </button>
           </div>
 
@@ -113,7 +113,7 @@ export default function SalesVideo() {
             type="button"
             onClick={() => setIsOpen(true)}
             className="group relative mx-auto w-full max-w-[350px] overflow-hidden rounded-[2rem] border-[8px] border-white/10 bg-[#031A38] text-left shadow-2xl transition hover:-translate-y-1 hover:border-[#00D97E]/45"
-            aria-label="Play the Unmute Pro 45-second introduction video"
+            aria-label="Play the Unmute Pro 48-second introduction video"
           >
             <div className="relative aspect-[9/16] overflow-hidden px-7 py-8">
               <div className="absolute -right-16 top-24 h-56 w-56 rounded-full bg-[#00D97E]/30 blur-3xl transition duration-500 group-hover:scale-125" />
@@ -141,7 +141,7 @@ export default function SalesVideo() {
                       <span className="block font-extrabold text-white">Watch now</span>
                       <span className="mt-0.5 flex items-center gap-1.5 text-xs font-semibold text-blue-100">
                         <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-                        45 seconds
+                        48 seconds
                         <Volume2 className="ml-1 h-3.5 w-3.5" aria-hidden="true" />
                         Sound on
                       </span>
@@ -171,7 +171,7 @@ export default function SalesVideo() {
                   Meet Unmute Pro
                 </p>
                 <p className="mt-0.5 text-xs text-blue-100">
-                  45-second introduction
+                  48-second introduction with voice
                 </p>
               </div>
               <button
