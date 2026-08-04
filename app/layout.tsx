@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import LeadChatbot from "@/components/LeadChatbot";
+import ConversionAnalytics from "@/components/ConversionAnalytics";
 import "./globals.css";
 
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         {/* Public website lead assistant and sales follow-up */}
         <LeadChatbot />
+        <ConversionAnalytics />
         <Analytics />
         {gaMeasurementId && (
           <>
@@ -127,4 +129,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-
